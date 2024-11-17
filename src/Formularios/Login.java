@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joser
@@ -20,6 +21,11 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/a.jpg");
+    }
+    
+    public void limpiar(){
+        txtUsuario.setText("");
+        txtClave.setText("");
     }
     
     @SuppressWarnings("unchecked")
@@ -64,7 +70,6 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario.setText("USUARIO");
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyTyped(evt);
@@ -74,10 +79,14 @@ public class Login extends javax.swing.JFrame {
         lblRegistrarse.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lblRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
         lblRegistrarse.setText("Registrarse");
+        lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegistrarseMouseClicked(evt);
+            }
+        });
 
         txtClave.setBackground(new java.awt.Color(255, 255, 255));
         txtClave.setForeground(new java.awt.Color(39, 65, 140));
-        txtClave.setText("Contraseña");
         txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtClaveKeyTyped(evt);
@@ -88,25 +97,24 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblRegistrarse)
-                            .addGap(142, 142, 142))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(105, 105, 105)))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtClave)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblRegistrarse)
+                        .addGap(141, 141, 141))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,10 +200,32 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveKeyTyped
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        Menu frmMenu = new Menu();
-        frmMenu.setVisible(true);
-        this.hide();
+        String usuario = txtUsuario.getText();
+        char[] clave = txtClave.getPassword();
+        String contra = new String(clave);
+    
+        if (usuario.length() < 4) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos 4 caracteres.", "Error de validación", javax.swing.JOptionPane.ERROR_MESSAGE);
+            limpiar();
+            return;
+        }else if(contra.length() < 4){
+            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Error de validación", javax.swing.JOptionPane.ERROR_MESSAGE);
+            limpiar();
+            return;
+        }else{
+            Menu frmMenu = new Menu();
+            frmMenu.setVisible(true);
+            this.setVisible(false);        
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
+        if(JOptionPane.showConfirmDialog(null, "¿Desea crear un nuevo usuario?", "¡Atencion!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            Registro frmRegistro = new Registro();
+            frmRegistro.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_lblRegistrarseMouseClicked
 
     /**
      * @param args the command line arguments
