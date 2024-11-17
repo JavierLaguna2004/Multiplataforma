@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joser
@@ -45,9 +46,9 @@ public class Clientes extends javax.swing.JFrame {
         btnAgregar3 = new javax.swing.JButton();
         btnGuardar3 = new javax.swing.JButton();
         btnEliminar3 = new javax.swing.JButton();
-        btnCerrarSesion3 = new javax.swing.JButton();
-        btnSalir6 = new javax.swing.JButton();
-        btnSalir13 = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,25 +126,35 @@ public class Clientes extends javax.swing.JFrame {
         btnEliminar3.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar3.setText("ELIMINAR");
 
-        btnCerrarSesion3.setBackground(new java.awt.Color(102, 0, 0));
-        btnCerrarSesion3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        btnCerrarSesion3.setForeground(new java.awt.Color(255, 0, 0));
-        btnCerrarSesion3.setText("CERRAR SESION");
-
-        btnSalir6.setBackground(new java.awt.Color(102, 0, 0));
-        btnSalir6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnSalir6.setForeground(new java.awt.Color(255, 0, 0));
-        btnSalir6.setText("SALIR");
-        btnSalir6.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesion.setBackground(new java.awt.Color(102, 0, 0));
+        btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 0, 0));
+        btnCerrarSesion.setText("CERRAR SESION");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalir6ActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
             }
         });
 
-        btnSalir13.setBackground(new java.awt.Color(39, 65, 140));
-        btnSalir13.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnSalir13.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalir13.setText("REGRESAR");
+        btnSalir.setBackground(new java.awt.Color(102, 0, 0));
+        btnSalir.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 0, 0));
+        btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("REGRESAR");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -152,16 +163,16 @@ public class Clientes extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalir13)
+                    .addComponent(btnRegresar)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(btnSalir6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 543, Short.MAX_VALUE)
                 .addComponent(btnModificar5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnEliminar3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(109, 109, 109)
-                .addComponent(btnCerrarSesion3)
+                .addComponent(btnCerrarSesion)
                 .addGap(25, 25, 25))
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel14Layout.createSequentialGroup()
@@ -182,13 +193,13 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(btnEliminar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel14Layout.createSequentialGroup()
-                        .addComponent(btnCerrarSesion3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(btnSalir13)
+                        .addComponent(btnRegresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalir6)))
+                        .addComponent(btnSalir)))
                 .addContainerGap())
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel14Layout.createSequentialGroup()
@@ -278,9 +289,25 @@ public class Clientes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificar5ActionPerformed
 
-    private void btnSalir6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalir6ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "¿Desea salir de la sesión actual?", "¡Atencion!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        Menu frmM = new Menu();
+        frmM.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "¿Desea cerrar la sesión actual?", "¡Atencion!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            Login frmL = new Login();
+            frmL.setVisible(true);
+            this.hide();
+        }
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,63 +358,19 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnAgregar1;
-    private javax.swing.JButton btnAgregar2;
     private javax.swing.JButton btnAgregar3;
-    private javax.swing.JButton btnAgregar4;
-    private javax.swing.JButton btnAgregar5;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnCerrarSesion1;
-    private javax.swing.JButton btnCerrarSesion2;
-    private javax.swing.JButton btnCerrarSesion3;
-    private javax.swing.JButton btnCerrarSesion4;
-    private javax.swing.JButton btnCerrarSesion5;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEliminar1;
-    private javax.swing.JButton btnEliminar2;
     private javax.swing.JButton btnEliminar3;
-    private javax.swing.JButton btnEliminar4;
-    private javax.swing.JButton btnEliminar5;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardar1;
-    private javax.swing.JButton btnGuardar2;
     private javax.swing.JButton btnGuardar3;
-    private javax.swing.JButton btnGuardar4;
-    private javax.swing.JButton btnGuardar5;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnModificar1;
-    private javax.swing.JButton btnModificar2;
-    private javax.swing.JButton btnModificar3;
-    private javax.swing.JButton btnModificar4;
     private javax.swing.JButton btnModificar5;
-    private javax.swing.JButton btnModificar6;
-    private javax.swing.JButton btnModificar7;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSalir1;
-    private javax.swing.JButton btnSalir10;
-    private javax.swing.JButton btnSalir13;
-    private javax.swing.JButton btnSalir2;
-    private javax.swing.JButton btnSalir3;
-    private javax.swing.JButton btnSalir4;
-    private javax.swing.JButton btnSalir5;
-    private javax.swing.JButton btnSalir6;
-    private javax.swing.JButton btnSalir7;
-    private javax.swing.JButton btnSalir8;
-    private javax.swing.JButton btnSalir9;
     private javax.swing.JTable jClientes;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogo;
