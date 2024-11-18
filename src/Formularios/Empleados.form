@@ -222,9 +222,9 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jComboBox1" min="-2" pref="192" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane1" min="-2" pref="826" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="809" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
