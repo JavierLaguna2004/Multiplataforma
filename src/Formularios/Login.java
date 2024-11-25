@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
 import javax.swing.JOptionPane;
+import java.sql.*;
 /**
  *
  * @author joser
@@ -200,7 +201,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveKeyTyped
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        String usuario = txtUsuario.getText();
+       /* String usuario = txtUsuario.getText();
         char[] clave = txtClave.getPassword();
         String contra = new String(clave);
     
@@ -216,7 +217,20 @@ public class Login extends javax.swing.JFrame {
             Menu frmMenu = new Menu();
             frmMenu.setVisible(true);
             this.setVisible(false);        
-        }
+        }*/
+       
+       
+           ConexionSQL conexion = new ConexionSQL();
+    
+    // Intentar establecer la conexión
+    Connection conn = conexion.establecerConexion();
+    
+    // Validar si la conexión se estableció correctamente
+    if (conn != null) {
+        JOptionPane.showMessageDialog(this, "Conexión establecida correctamente.", "Conexión exitosa", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
