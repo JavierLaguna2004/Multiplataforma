@@ -9,7 +9,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
 import javax.swing.JOptionPane;
-
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
 public class Usuarios extends javax.swing.JFrame {
     
     private ImageIcon imagen;
@@ -19,7 +22,128 @@ public class Usuarios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
+        
+        
+    llenarComboRoles();
+    llenarComboEmpleados();
     }
+    
+    private void guardarUsuario() {
+    // Validar que los campos no estén vacíos
+    String usuario = txtUsuario.getText().trim();
+    String clave = txtClave.getText().trim();
+    String empleadoSeleccionado = (String) cmbEmpleado.getSelectedItem();
+    String rolSeleccionado = (String) cmbRol.getSelectedItem();
+
+    if (usuario.isEmpty() || clave.isEmpty() || empleadoSeleccionado == null || rolSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    ConexionSQL conexion = new ConexionSQL();
+    Connection conn = conexion.establecerConexion();
+
+    if (conn != null) {
+        try {
+            // Obtener el IdEmpleado y el IdRol
+            String queryEmpleado = "SELECT IdEmpleado FROM Empleados WHERE CONCAT(Nombres, ' ', Apellidos) = ?";
+            String queryRol = "SELECT IdRol FROM Roles WHERE Nombre = ?";
+            
+            PreparedStatement psEmpleado = conn.prepareStatement(queryEmpleado);
+            psEmpleado.setString(1, empleadoSeleccionado);
+            ResultSet rsEmpleado = psEmpleado.executeQuery();
+
+            PreparedStatement psRol = conn.prepareStatement(queryRol);
+            psRol.setString(1, rolSeleccionado);
+            ResultSet rsRol = psRol.executeQuery();
+
+            if (rsEmpleado.next() && rsRol.next()) {
+                int idEmpleado = rsEmpleado.getInt("IdEmpleado");
+                int idRol = rsRol.getInt("IdRol");
+
+                // Insertar el usuario en la tabla Usuarios
+                String queryInsert = "INSERT INTO Usuarios (Usuario, Contrasena, IdRol, IdEmpleado) VALUES (?, ?, ?, ?)";
+                PreparedStatement psInsert = conn.prepareStatement(queryInsert);
+                psInsert.setString(1, usuario);
+                psInsert.setString(2, clave); 
+                psInsert.setInt(3, idRol);
+                psInsert.setInt(4, idEmpleado);
+
+                psInsert.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, "Usuario guardado correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el empleado o rol seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            rsEmpleado.close();
+            psEmpleado.close();
+            rsRol.close();
+            psRol.close();
+            conn.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
+    private void llenarComboRoles() {
+    ConexionSQL conexion = new ConexionSQL();
+    Connection conn = conexion.establecerConexion();
+    if (conn != null) {
+        try {
+            String query = "SELECT Nombre FROM Roles";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            // Limpiar los elementos previos
+            cmbRol.removeAllItems();
+
+            while (rs.next()) {
+                cmbRol.addItem(rs.getString("Nombre"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al llenar el combo de roles: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
+    }
+}
+
+       private void llenarComboEmpleados() {
+    ConexionSQL conexion = new ConexionSQL();
+    Connection conn = conexion.establecerConexion();
+    if (conn != null) {
+        try {
+            String query = "SELECT CONCAT(Nombres, ' ', Apellidos) AS NombreCompleto FROM Empleados";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            // Limpiar los elementos previos
+            cmbEmpleado.removeAllItems();
+
+            while (rs.next()) {
+                cmbEmpleado.addItem(rs.getString("NombreCompleto"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al llenar el combo de empleados: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +170,7 @@ public class Usuarios extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        txtUsuario = new javax.swing.JTextField();
+        txtClave = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUsuario1 = new javax.swing.JTextField();
@@ -54,9 +178,9 @@ public class Usuarios extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        txtUsuario2 = new javax.swing.JTextField();
+        cmbEmpleado = new javax.swing.JComboBox<>();
+        cmbRol = new javax.swing.JComboBox<>();
+        txtUsuario = new javax.swing.JTextField();
         jComboBox4 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -127,6 +251,11 @@ public class Usuarios extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(39, 65, 140));
         btnEliminar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -204,12 +333,17 @@ public class Usuarios extends javax.swing.JFrame {
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtClave.setBackground(new java.awt.Color(255, 255, 255));
+        txtClave.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtClave.setForeground(new java.awt.Color(39, 65, 140));
+        txtClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtClaveActionPerformed(evt);
+            }
+        });
+        txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuarioKeyTyped(evt);
+                txtClaveKeyTyped(evt);
             }
         });
 
@@ -248,22 +382,37 @@ public class Usuarios extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
         jLabel7.setText("Buscar Por:");
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEmpleado.setBackground(new java.awt.Color(255, 255, 255));
+        cmbEmpleado.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        cmbEmpleado.setForeground(new java.awt.Color(39, 65, 140));
+        cmbEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEmpleadoActionPerformed(evt);
+            }
+        });
 
-        jComboBox3.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox3.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbRol.setBackground(new java.awt.Color(255, 255, 255));
+        cmbRol.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        cmbRol.setForeground(new java.awt.Color(39, 65, 140));
+        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRolActionPerformed(evt);
+            }
+        });
 
-        txtUsuario2.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario2.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario2KeyTyped(evt);
+                txtUsuarioKeyTyped(evt);
             }
         });
 
@@ -285,10 +434,10 @@ public class Usuarios extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtUsuario)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtUsuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtClave)
+                    .addComponent(cmbRol, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbEmpleado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -321,19 +470,19 @@ public class Usuarios extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -410,19 +559,39 @@ public class Usuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+    private void txtClaveKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyTyped
         if (evt.getKeyChar() == ' ') {
             evt.consume();
         }
-    }//GEN-LAST:event_txtUsuarioKeyTyped
+    }//GEN-LAST:event_txtClaveKeyTyped
 
     private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuario1KeyTyped
 
-    private void txtUsuario2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario2KeyTyped
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario2KeyTyped
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void cmbEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEmpleadoActionPerformed
+
+    private void cmbRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbRolActionPerformed
+
+    private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtClaveActionPerformed
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+         guardarUsuario();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,8 +649,8 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> cmbEmpleado;
+    private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -498,8 +667,8 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jUsuarios;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JTextField txtClave;
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField txtUsuario1;
-    private javax.swing.JTextField txtUsuario2;
     // End of variables declaration//GEN-END:variables
 }
