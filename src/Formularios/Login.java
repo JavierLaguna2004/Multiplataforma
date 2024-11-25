@@ -201,35 +201,51 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveKeyTyped
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-       /* String usuario = txtUsuario.getText();
-        char[] clave = txtClave.getPassword();
-        String contra = new String(clave);
-    
-        if (usuario.length() < 4) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos 4 caracteres.", "Error de validación", javax.swing.JOptionPane.ERROR_MESSAGE);
-            limpiar();
-            return;
-        }else if(contra.length() < 4){
-            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Error de validación", javax.swing.JOptionPane.ERROR_MESSAGE);
-            limpiar();
-            return;
-        }else{
-            Menu frmMenu = new Menu();
-            frmMenu.setVisible(true);
-            this.setVisible(false);        
-        }*/
-       
-       
-           ConexionSQL conexion = new ConexionSQL();
-    
-    // Intentar establecer la conexión
-    Connection conn = conexion.establecerConexion();
-    
-    // Validar si la conexión se estableció correctamente
-    if (conn != null) {
-        JOptionPane.showMessageDialog(this, "Conexión establecida correctamente.", "Conexión exitosa", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+    String usuario = txtUsuario.getText();
+    char[] clave = txtClave.getPassword();
+    String contra = new String(clave);
+
+    if (usuario.length() < 4) {
+        JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        limpiar();
+        return;
+    } else if (contra.length() < 4) {
+        JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        limpiar();
+        return;
+    }
+
+    try {
+        ConexionSQL conexion = new ConexionSQL();
+        Connection conn = conexion.establecerConexion();
+
+        if (conn != null) {
+            // Consulta SQL para validar usuario y contraseña
+            String sql = "SELECT * FROM Usuarios WHERE Usuario = ? AND Contrasena = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, usuario);
+            pst.setString(2, contra);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                // Si se encuentran las credenciales, abrir el menú
+                Menu frmMenu = new Menu();
+                frmMenu.setVisible(true);
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+                limpiar();
+            }
+
+            rs.close();
+            pst.close();
+            conn.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
