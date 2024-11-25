@@ -9,6 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
 
 public class Productos extends javax.swing.JFrame {
 
@@ -19,7 +24,115 @@ public class Productos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo5,"src/Formularios/logoSiglas.jpg");
+        
+        llenarComboProveedores();
     }
+    
+    private void llenarComboProveedores() {
+    ConexionSQL conexion = new ConexionSQL();
+    Connection conn = conexion.establecerConexion();
+
+    if (conn != null) {
+        try {
+            String query = "SELECT Nombre FROM Proveedores";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            // Limpiar elementos previos en el combo
+            cmbProveedor.removeAllItems();
+
+            while (rs.next()) {
+                cmbProveedor.addItem(rs.getString("Nombre"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al llenar el combo de proveedores: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    private void guardarProducto() {
+    // Validar que los campos no estén vacíos
+    String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+    String precioText = txtPrecio.getText().trim();
+    String stockText = txtStock.getText().trim();
+    String proveedorSeleccionado = (String) cmbProveedor.getSelectedItem();
+
+    if (nombre.isEmpty() || precioText.isEmpty() || stockText.isEmpty() || proveedorSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar datos numéricos
+    double precio;
+    int stock;
+    try {
+        precio = Double.parseDouble(precioText);
+        stock = Integer.parseInt(stockText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El precio y el stock deben ser valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Establecer conexión a la base de datos
+    ConexionSQL conexion = new ConexionSQL();
+    Connection conn = conexion.establecerConexion();
+
+    if (conn != null) {
+        try {
+            // Obtener el IdProveedor basado en el nombre seleccionado en el combo
+            String queryProveedor = "SELECT IdProveedor FROM Proveedores WHERE Nombre = ?";
+            PreparedStatement stmtProveedor = conn.prepareStatement(queryProveedor);
+            stmtProveedor.setString(1, proveedorSeleccionado);
+            ResultSet rs = stmtProveedor.executeQuery();
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this, "Proveedor no válido seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int idProveedor = rs.getInt("IdProveedor");
+
+            // Insertar producto en la tabla Productos
+            String queryInsert = "INSERT INTO Productos (Nombre, Descripcion, Precio, Stock, IdProveedor) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmtInsert = conn.prepareStatement(queryInsert);
+
+            stmtInsert.setString(1, nombre);
+            stmtInsert.setString(2, descripcion);
+            stmtInsert.setDouble(3, precio);
+            stmtInsert.setInt(4, stock);
+            stmtInsert.setInt(5, idProveedor);
+
+            stmtInsert.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Producto guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpiar campos
+            txtNombre.setText("");
+            txtDescripcion.setText("");
+            txtPrecio.setText("");
+            txtStock.setText("");
+            cmbProveedor.setSelectedIndex(-1);
+
+            stmtInsert.close();
+            rs.close();
+            stmtProveedor.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el producto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,24 +160,23 @@ public class Productos extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtUsuario1 = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtUsuario2 = new javax.swing.JTextField();
+        txtStock = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDescripcion = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         txtUsuario3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1210, 612));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(90, 134, 191));
@@ -134,6 +246,11 @@ public class Productos extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(39, 65, 140));
         btnEliminar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -215,12 +332,17 @@ public class Productos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
         jLabel3.setText("NOMBRE:");
 
-        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
+        txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(39, 65, 140));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuarioKeyTyped(evt);
+                txtNombreKeyTyped(evt);
             }
         });
 
@@ -228,12 +350,17 @@ public class Productos extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(39, 65, 140));
         jLabel4.setText("PRECIO:");
 
-        txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPrecio.setBackground(new java.awt.Color(255, 255, 255));
+        txtPrecio.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(39, 65, 140));
+        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioActionPerformed(evt);
+            }
+        });
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
+                txtPrecioKeyTyped(evt);
             }
         });
 
@@ -241,12 +368,17 @@ public class Productos extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
         jLabel6.setText("STOCK:");
 
-        txtUsuario2.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario2.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtStock.setBackground(new java.awt.Color(255, 255, 255));
+        txtStock.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtStock.setForeground(new java.awt.Color(39, 65, 140));
+        txtStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockActionPerformed(evt);
+            }
+        });
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario2KeyTyped(evt);
+                txtStockKeyTyped(evt);
             }
         });
 
@@ -254,12 +386,17 @@ public class Productos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(39, 65, 140));
         jLabel1.setText("DESCRIPCION:");
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(39, 65, 140));
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtDescripcion.setForeground(new java.awt.Color(39, 65, 140));
+        txtDescripcion.setRows(5);
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(txtDescripcion);
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(39, 65, 140));
@@ -283,10 +420,14 @@ public class Productos extends javax.swing.JFrame {
         jComboBox4.setForeground(new java.awt.Color(39, 65, 140));
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProveedor.setBackground(new java.awt.Color(255, 255, 255));
+        cmbProveedor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cmbProveedor.setForeground(new java.awt.Color(39, 65, 140));
+        cmbProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProveedorActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
@@ -307,7 +448,7 @@ public class Productos extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,10 +459,9 @@ public class Productos extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtUsuario2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                                        .addComponent(txtUsuario1, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addComponent(txtUsuario))))
+                                    .addComponent(txtStock, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                    .addComponent(txtPrecio)
+                                    .addComponent(txtNombre))))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
@@ -334,7 +474,7 @@ public class Productos extends javax.swing.JFrame {
                                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,16 +492,16 @@ public class Productos extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuario2))
+                            .addComponent(txtStock))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,7 +509,7 @@ public class Productos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
@@ -447,23 +587,47 @@ public class Productos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         if (evt.getKeyChar() == ' ') {
             evt.consume();
         }
-    }//GEN-LAST:event_txtUsuarioKeyTyped
+    }//GEN-LAST:event_txtNombreKeyTyped
 
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
+    }//GEN-LAST:event_txtPrecioKeyTyped
 
-    private void txtUsuario2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario2KeyTyped
+    private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario2KeyTyped
+    }//GEN-LAST:event_txtStockKeyTyped
 
     private void txtUsuario3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario3KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuario3KeyTyped
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
+    private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStockActionPerformed
+
+    private void cmbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbProveedorActionPerformed
+
+    private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionKeyTyped
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+         guardarProducto();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -521,7 +685,7 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -539,11 +703,11 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JTable jProductos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblLogo5;
-    private javax.swing.JTextField txtUsuario;
-    private javax.swing.JTextField txtUsuario1;
-    private javax.swing.JTextField txtUsuario2;
+    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtUsuario3;
     // End of variables declaration//GEN-END:variables
 }
