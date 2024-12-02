@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 public class ConexionSQL {
     Connection conectar = null;
     
-    String usuario = "Javier";
-    String contrasena = "root2";
+    String usuario = "victoria";
+    String contrasena = "root3";
     String bd = "SistemaFacturacionLaboratorio";
-    String ip = "localhost";
+    String ip = "DESKTOP-LDCP4B6";
     String puerto = "1433";
     
     String cadena = "jdbc:sqlserver://" + ip + ":" + puerto + ";databaseName=" + bd+";"+"encrypt=true; trustServerCertificate=true;";
