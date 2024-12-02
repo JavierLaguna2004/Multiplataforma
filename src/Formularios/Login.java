@@ -38,19 +38,22 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
-        lblRegistrarse = new javax.swing.JLabel();
         txtClave = new javax.swing.JPasswordField();
+        btnSalir = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(38, 53, 140));
+        jPanel1.setBackground(new java.awt.Color(39, 65, 140));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 44)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,15 +80,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        lblRegistrarse.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        lblRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
-        lblRegistrarse.setText("Registrarse");
-        lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseClicked(evt);
-            }
-        });
-
         txtClave.setBackground(new java.awt.Color(255, 255, 255));
         txtClave.setForeground(new java.awt.Color(39, 65, 140));
         txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -94,43 +88,67 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setBackground(new java.awt.Color(39, 65, 140));
+        btnSalir.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
+        btnSalir.setText("SALIR");
+        btnSalir.setBorder(null);
+        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Usuario:");
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Contraseña:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtClave)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblRegistrarse)
-                        .addGap(141, 141, 141))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(txtClave, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtUsuario)
+                            .addComponent(jLabel3)
+                            .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1))
+                .addGap(14, 14, 14))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 272, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblRegistrarse)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -143,15 +161,15 @@ public class Login extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(51, 51, 51)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -164,7 +182,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,11 +206,11 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
-        if (evt.getKeyChar() == ' ') {
-            evt.consume();
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "¿Desea salir de la sesión actual?", "¡Atencion!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            System.exit(0);
         }
-    }//GEN-LAST:event_txtUsuarioKeyTyped
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtClaveKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyTyped
         if (evt.getKeyChar() == ' ') {
@@ -200,62 +218,75 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtClaveKeyTyped
 
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        if (evt.getKeyChar() == ' ') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-    String usuario = txtUsuario.getText();
-    char[] clave = txtClave.getPassword();
-    String contra = new String(clave);
+        String usuario = txtUsuario.getText();
+        char[] clave = txtClave.getPassword();
+        String contra = new String(clave);
 
-    if (usuario.length() < 4) {
-        JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        limpiar();
-        return;
-    } else if (contra.length() < 4) {
-        JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        limpiar();
-        return;
-    }
+        if (usuario.length() < 4) {
+            JOptionPane.showMessageDialog(this, "El nombre de usuario debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            limpiar();
+            return;
+        } else if (contra.length() < 4) {
+            JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 4 caracteres.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            limpiar();
+            return;
+        }
 
-    try {
-        ConexionSQL conexion = new ConexionSQL();
-        Connection conn = conexion.establecerConexion();
+        try {
+            ConexionSQL conexion = new ConexionSQL();
+            Connection cone = conexion.establecerConexion();
 
-        if (conn != null) {
-            // Consulta SQL para validar usuario y contraseña
-            String sql = "SELECT * FROM Usuarios WHERE Usuario = ? AND Contrasena = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, usuario);
-            pst.setString(2, contra);
+            if (cone != null) {
+                
+                String sql = """
+                             SELECT Roles.Nombre AS Rol, Usuarios.IdEmpleado
+                             FROM Usuarios INNER JOIN
+                             Roles ON Usuarios.IdRol = Roles.IdRol WHERE Usuario = ? AND Contrasena = ?""";
+                PreparedStatement pst = cone.prepareStatement(sql);
+                pst.setString(1, usuario);
+                pst.setString(2, contra);
 
-            ResultSet rs = pst.executeQuery();
+                ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                // Si se encuentran las credenciales, abrir el menú
-                Menu frmMenu = new Menu();
-                frmMenu.setVisible(true);
-                this.setVisible(false);
+                    int IDemp = rs.getInt("IdEmpleado");
+                    String rolEmpleado = rs.getString("Rol");
+
+                    if (rolEmpleado.equals("GER")) {
+                        Menu frmM = new Menu(IDemp,rolEmpleado);
+                        frmM.setVisible(true);
+                    } else if (rolEmpleado.equals("ADM")) {
+                        MenuAAC frmMA = new MenuAAC(IDemp,rolEmpleado);
+                        frmMA.setVisible(true);
+                    } else if(rolEmpleado.equals("ENF") || rolEmpleado.equals("MIC")){
+                        MenuENFMIC frmEM = new MenuENFMIC(IDemp,rolEmpleado);
+                        frmEM.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Rol desconocido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+                    limpiar();
+                }
+
+                rs.close();
+                pst.close();
+                cone.close();
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
-                limpiar();
+                JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
             }
-
-            rs.close();
-            pst.close();
-            conn.close();
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_btnIngresarActionPerformed
-
-    private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        if(JOptionPane.showConfirmDialog(null, "¿Desea crear un nuevo usuario?", "¡Atencion!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-            Registro frmRegistro = new Registro();
-            frmRegistro.setVisible(true);
-            this.setVisible(false);
-        }
-    }//GEN-LAST:event_lblRegistrarseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -309,12 +340,14 @@ public class Login extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
