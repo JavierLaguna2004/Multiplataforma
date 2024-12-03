@@ -15,7 +15,7 @@ public class LaboratorioMedico {
      */
     public static void main(String[] args) {
         Login frmLogin = new Login();
-        frmLogin.show();
+        frmLogin.setVisible(true);
     }
     
 }

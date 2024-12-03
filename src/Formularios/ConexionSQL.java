@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 public class ConexionSQL {
     Connection conectar = null;
     
-    String usuario = "Javier";
-    String contrasena = "root2";
+    String usuario = "Ramon";
+    String contrasena = "123456";
     String bd = "SistemaFacturacionLaboratorio";
     String ip = "localhost";
     String puerto = "1433";
