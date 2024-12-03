@@ -54,6 +54,7 @@ public class MantenimientoEmpleados {
      }
     
     }
+       //jj
     public void mantenimientoEmpleados(int codigo,String identidad,String Nombre,String Apellido,String Correo,String Direccion,Double Salario,String jornada,int idsucursal,int idpuesto,String accion){
     
      try{

@@ -787,7 +787,7 @@ if(validar.ValidarNumeros(txtidentidad.getText()) && validar.ValidarNumeros(txtS
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtUsuario3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario3KeyReleased
-  
+  //jj
     if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || 
         evt.getKeyCode() == KeyEvent.VK_DELETE || 
         evt.getKeyCode() == KeyEvent.VK_ENTER || 

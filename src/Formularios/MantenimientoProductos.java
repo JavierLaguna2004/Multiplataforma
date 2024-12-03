@@ -66,7 +66,7 @@ public class MantenimientoProductos {
     ResultSetMetaData rsmd;
     int columnas;
      try{
-     
+     //jj
          Connection con =conexion.establecerConexion();
          CallableStatement cmd=con.prepareCall("{CALL sp_busquedaproductos(?,?)}");
          cmd.setString(1, Dato);

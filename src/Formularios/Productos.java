@@ -603,7 +603,7 @@ MantenimientoProductos mantp = new MantenimientoProductos();
         mantp.mantenimientoproductos(codigo, nombre, descripcion, Double.valueOf(precioText),Integer.parseInt(stockText),cmbProveedor.getSelectedIndex(), "agregar");
         mantp.cargartabla(jProductos, 0, "", "", 0.0, 0, 0, "mostrar");
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+//hola
     private void jProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProductosMouseClicked
        try{
        fila= jProductos.getSelectedRow();

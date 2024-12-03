@@ -9,7 +9,7 @@ package Formularios;
  * @author carlo
  */
 public class Validacione_NumeroyLetras {
-    
+    //jj
     
     public boolean ValidarNumeros(String dato){ 
   return dato.matches("[0-9]*");
