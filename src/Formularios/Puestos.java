@@ -108,13 +108,10 @@ public class Puestos extends javax.swing.JFrame {
 
         jPuestos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Nombre", "Descripcion"
             }
         ));
         jPuestos.addMouseListener(new java.awt.event.MouseAdapter() {
