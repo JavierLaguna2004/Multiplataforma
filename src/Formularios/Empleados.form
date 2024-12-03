@@ -306,9 +306,21 @@
                     <Component class="javax.swing.JTable" name="jEmpleados">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="0" rowCount="4"/>
+                          <Table columnCount="8" rowCount="0">
+                            <Column editable="true" title="Nombre" type="java.lang.Object"/>
+                            <Column editable="true" title="Apellido" type="java.lang.Object"/>
+                            <Column editable="true" title="Correo" type="java.lang.Object"/>
+                            <Column editable="true" title="Direccion" type="java.lang.Object"/>
+                            <Column editable="true" title="Salario" type="java.lang.Object"/>
+                            <Column editable="true" title="Jornada" type="java.lang.Object"/>
+                            <Column editable="true" title="Sucursal" type="java.lang.Object"/>
+                            <Column editable="true" title="Puesto" type="java.lang.Object"/>
+                          </Table>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jEmpleadosMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -712,9 +724,9 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Iconos/Add-circle.png"/>
+                          <Image iconType="3" name="/Iconos/Delete.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="AGREGAR"/>
+                        <Property name="text" type="java.lang.String" value="LIMPIAR"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnGuardar">
@@ -753,6 +765,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="ELIMINAR"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnCerrarSesion">
                       <Properties>

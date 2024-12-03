@@ -113,13 +113,13 @@ public class Proveedores extends javax.swing.JFrame {
 
         jProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Nombre", "Correo", "Telefono", "Direccion"
             }
         ));
         jProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -492,13 +492,13 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDireccionKeyPressed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        MU.mantenimientosproveedores(codigo,txtNombre.getText(),txtCorreo.getText(),txtTelefono.getText(),txtDireccion.getText(),"actualizar");
+        MU.mantenimientosproveedores(codigo,txtNombre.getText(),txtTelefono.getText(),txtDireccion.getText(),txtCorreo.getText(),"actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
         MU.cargartablaProveedores(jProveedores, 0, "1","1","1","1","mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        MU.mantenimientosproveedores(0,txtNombre.getText(),txtCorreo.getText(),txtTelefono.getText(),txtDireccion.getText(),"agregar");
+        MU.mantenimientosproveedores(codigo,txtNombre.getText(),txtTelefono.getText(),txtDireccion.getText(),txtCorreo.getText(),"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido agregado!");
         MU.cargartablaProveedores(jProveedores, 0, "1","1","1","1","mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed

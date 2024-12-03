@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -9,22 +9,53 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 
 public class Empleados extends javax.swing.JFrame {
 
     private ImageIcon imagen;
     private Icon icono;
+    MantenimientoEmpleados MU = new MantenimientoEmpleados();
+    ConexionSQL cone = new ConexionSQL();
+    
+    int fila;
+    int codigo;
+    String identidad1 = "";
+    
     
     public Empleados() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
-        llenarComboJornadas();
-        llenarComboSucursales();
-        llenarComboPuestos();        
+        this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");   
+        
+        llenarjornadasproc();
+        llenarsucursalproc();
+        llenarpuestoproc();
+        
+        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+    }
+    
+    public void llenarjornadasproc(){
+         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+
+        modelo.addElement("Seleccione: ");
+        modelo.addElement("A");
+        modelo.addElement("B");
+        modelo.addElement("C");
+        cmbjornada.setModel(modelo);
+    }
+    
+    public void llenarsucursalproc(){
+        cmbsucursal.setModel(MU.llenarsucursal());
+    }
+    
+    public void llenarpuestoproc(){
+        cmbpuesto.setModel(MU.llenarpuesto());
     }
 
     /**
@@ -111,15 +142,17 @@ public class Empleados extends javax.swing.JFrame {
 
         jEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Nombre", "Apellido", "Correo", "Direccion", "Salario", "Jornada", "Sucursal", "Puesto"
             }
         ));
+        jEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jEmpleados);
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
@@ -277,8 +310,8 @@ public class Empleados extends javax.swing.JFrame {
         btnAgregar.setBackground(new java.awt.Color(39, 65, 140));
         btnAgregar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add-circle.png"))); // NOI18N
-        btnAgregar.setText("AGREGAR");
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Delete.png"))); // NOI18N
+        btnAgregar.setText("LIMPIAR");
 
         btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -296,6 +329,11 @@ public class Empleados extends javax.swing.JFrame {
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Backspace.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnCerrarSesion.setBackground(new java.awt.Color(39, 65, 140));
         btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -587,11 +625,27 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        ComboSucursal sucursalSeleccionado = (ComboSucursal) cmbsucursal.getSelectedItem();
+        int idSucursal = sucursalSeleccionado.getIdSucursal();
+        
+        ComboPuesto puestoSeleccionado = (ComboPuesto) cmbpuesto.getSelectedItem();
+        int idPuesto = puestoSeleccionado.getIdPuesto();
+        
+        MU.mantenimientosempleados(codigo,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),Double.parseDouble(txtSalario.getText()),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"actualizar");
+        JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
+        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        ComboSucursal sucursalSeleccionado = (ComboSucursal) cmbsucursal.getSelectedItem();
+        int idSucursal = sucursalSeleccionado.getIdSucursal();
+        
+        ComboPuesto puestoSeleccionado = (ComboPuesto) cmbpuesto.getSelectedItem();
+        int idPuesto = puestoSeleccionado.getIdPuesto();
+        
+        MU.mantenimientosempleados(0,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),Double.parseDouble(txtSalario.getText()),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"agregar");
+        JOptionPane.showMessageDialog(null, "El registro ha sido guardado!");
+        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -608,178 +662,42 @@ public class Empleados extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void llenarComboJornadas() {
-        ConexionSQL conexion = new ConexionSQL();
-        Connection conn = conexion.establecerConexion();
-    if (conn != null) {
-        try {
-            String query = "SELECT CodigoJornada FROM Jornadas";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         MU.mantenimientosempleados(codigo, "1", "1", "1", "1", 0, "1", 0, 0, "eliminar");
+        JOptionPane.showMessageDialog(null, "El registro ha sido guardado!");
+        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-            while (rs.next()) {
-                cmbjornada.addItem(rs.getString("CodigoJornada"));
+    private void jEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jEmpleadosMouseClicked
+        
+        try{
+            fila = jEmpleados.getSelectedRow();
+            identidad1=jEmpleados.getValueAt(fila,0).toString();
+            ResultSet rs;
+            Connection con = cone.establecerConexion();
+            
+            CallableStatement cmd = con.prepareCall("{CALL mostrarempleadoespecifico(?)}");
+            cmd.setString(1, identidad1);
+            rs = cmd.executeQuery();
+            
+            while(rs.next()){
+                codigo = Integer.valueOf(rs.getInt("IdEmpleado"));
+                txtNombre.setText(rs.getString("Nombre"));
+                txtApellido.setText(rs.getString("Apellido"));
+                txtCorreo.setText(rs.getString("Correo"));
+                txtDireccion.setText(rs.getString("Direccion"));
+                txtSalario.setText(rs.getString("Salario"));
+                
+                
+                cmbjornada.setSelectedItem(rs.getString("Jornada"));
+                cmbsucursal.setSelectedItem(rs.getString("nombreSucursal"));
+                cmbpuesto.setSelectedItem(rs.getString("nombrePuesto"));
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar el combo: " + e.getMessage());
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
-    }
-}
-    
-    private void llenarComboSucursales() {
-        ConexionSQL conexion = new ConexionSQL();
-        Connection conn = conexion.establecerConexion();
-    if (conn != null) {
-        try {
-            String query = "SELECT Nombre FROM Sucursales";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                cmbsucursal.addItem(rs.getString("Nombre"));
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar el combo de sucursales: " + e.getMessage());
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
-    }
-}
-    
-    private void llenarComboPuestos() {
-        ConexionSQL conexion = new ConexionSQL();
-        Connection conn = conexion.establecerConexion();
-    if (conn != null) {
-        try {
-            String query = "SELECT Nombre FROM Puestos";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                cmbpuesto.addItem(rs.getString("Nombre"));
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar el combo de puestos: " + e.getMessage());
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
-    }
-}
-    
-    private void guardarEmpleado() {
-    // Obtener datos del formulario
-    String nombre = txtNombre.getText().trim();
-    String apellido = txtApellido.getText().trim();
-    String correo = txtCorreo.getText().trim();
-    String direccion = txtDireccion.getText().trim();
-    String salarioStr = txtSalario.getText().trim();
-    String jornada = (String) cmbjornada.getSelectedItem();
-    String sucursal = (String) cmbsucursal.getSelectedItem();
-    String puesto = (String) cmbpuesto.getSelectedItem();
-
-    // Validar campos obligatorios
-    if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || direccion.isEmpty() || salarioStr.isEmpty() || 
-        jornada == null || sucursal == null || puesto == null) {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-        return;
-    }
-
-    // Validar que el salario sea un número
-    double salario;
-    try {
-        salario = Double.parseDouble(salarioStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El salario debe ser un valor numérico.");
-        return;
-    }
-
-    // Conectar a la base de datos
-    ConexionSQL conexion = new ConexionSQL();
-    Connection conn = conexion.establecerConexion();
-    if (conn != null) {
-        try {
-            // Obtener los IDs correspondientes a sucursal y puesto
-            String querySucursal = "SELECT IdSucursal FROM Sucursales WHERE Nombre = ?";
-            String queryPuesto = "SELECT IdPuesto FROM Puestos WHERE Nombre = ?";
-            PreparedStatement stmtSucursal = conn.prepareStatement(querySucursal);
-            stmtSucursal.setString(1, sucursal);
-            ResultSet rsSucursal = stmtSucursal.executeQuery();
-            int idSucursal = rsSucursal.next() ? rsSucursal.getInt("IdSucursal") : -1;
-
-            PreparedStatement stmtPuesto = conn.prepareStatement(queryPuesto);
-            stmtPuesto.setString(1, puesto);
-            ResultSet rsPuesto = stmtPuesto.executeQuery();
-            int idPuesto = rsPuesto.next() ? rsPuesto.getInt("IdPuesto") : -1;
-
-            // Validar que se encontraron los IDs
-            if (idSucursal == -1 || idPuesto == -1) {
-                JOptionPane.showMessageDialog(this, "Error al obtener IDs de sucursal o puesto.");
-                return;
-            }
-
-            // Insertar el empleado
-            String insertQuery = "INSERT INTO Empleados (Nombres, Apellidos, Correo, Direccion, Salario, CodigoJornada, IdSucursal, IdPuesto) " +
-                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmtInsert = conn.prepareStatement(insertQuery);
-            stmtInsert.setString(1, nombre);
-            stmtInsert.setString(2, apellido);
-            stmtInsert.setString(3, correo);
-            stmtInsert.setString(4, direccion);
-            stmtInsert.setDouble(5, salario);
-            stmtInsert.setString(6, jornada);
-            stmtInsert.setInt(7, idSucursal);
-            stmtInsert.setInt(8, idPuesto);
-
-            int rowsInserted = stmtInsert.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Empleado guardado correctamente.");
-                limpiarFormulario(); // Método opcional para limpiar el formulario después de guardar
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo guardar el empleado.");
-            }
-
-            // Cerrar conexiones
-            stmtSucursal.close();
-            stmtPuesto.close();
-            stmtInsert.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar empleado: " + e.getMessage());
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
-    }
-}
-
-    
-            private void limpiarFormulario() {
-            txtNombre.setText("");
-            txtApellido.setText("");
-            txtCorreo.setText("");
-            txtDireccion.setText("");
-            txtSalario.setText("");
-            cmbjornada.setSelectedIndex(0);
-            cmbsucursal.setSelectedIndex(0);
-            cmbpuesto.setSelectedIndex(0);
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, ex.toString());
         }
 
-
-
-
+    }//GEN-LAST:event_jEmpleadosMouseClicked
     /**
      * @param args the command line arguments
      */

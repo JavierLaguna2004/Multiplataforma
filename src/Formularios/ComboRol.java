@@ -27,6 +27,6 @@ public class ComboRol {
 
     @Override
     public String toString() {
-        return nombreRol; // Esto es lo que se mostrará en el JComboBox
+        return nombreRol;
     }
 }

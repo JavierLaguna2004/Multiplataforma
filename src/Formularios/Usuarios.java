@@ -552,7 +552,7 @@ public class Usuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jUsuariosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        MU.mantenimientosusuarios(codigo,"1", "1", 0, 0,"eliminar");
+            MU.mantenimientosusuarios(codigo,"1", "1", 0, 0,"eliminar");
             JOptionPane.showMessageDialog(null, "El registro ha sido eliminado!");
             MU.cargartablaUsuarios(jUsuarios, 0, "1", "1", 0, 0,"mostrar");
     }//GEN-LAST:event_btnEliminarActionPerformed

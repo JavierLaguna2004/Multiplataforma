@@ -20,7 +20,7 @@ public class MantenimientoProveedores {
     
     ConexionSQL cone = new ConexionSQL();
     
-    public void mantenimientosproveedores(int codigo, String nombre,String correo,String telefono, String direccion,String accion)
+    public void mantenimientosproveedores(int codigo, String nombre,String telefono, String direccion,String correo,String accion)
      {
          try{
              Connection con = cone.establecerConexion();
@@ -28,9 +28,9 @@ public class MantenimientoProveedores {
          
              cmd.setInt(1,codigo);
              cmd.setString(2,nombre);
-             cmd.setString(3,correo);
-             cmd.setString(4,telefono);
-             cmd.setString(5,direccion);
+             cmd.setString(3,telefono);
+             cmd.setString(4,direccion);
+             cmd.setString(5,correo);
              cmd.setString(6,accion);
              
              cmd.execute();
@@ -39,7 +39,7 @@ public class MantenimientoProveedores {
              JOptionPane.showMessageDialog(null, ex.toString());}
      }
     
-    public void cargartablaProveedores(JTable tabla, int codigo, String nombre,String correo,String telefono, String direccion,String accion) {
+    public void cargartablaProveedores(JTable tabla, int codigo, String nombre,String telefono, String direccion,String correo,String accion) {
         DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
 
         modelotabla.setRowCount(0);
@@ -54,9 +54,9 @@ public class MantenimientoProveedores {
 
              cmd.setInt(1,codigo);
              cmd.setString(2,nombre);
-             cmd.setString(3,correo);
-             cmd.setString(4,telefono);
-             cmd.setString(5,direccion);
+             cmd.setString(3,telefono);
+             cmd.setString(4,direccion);
+             cmd.setString(5,correo);
              cmd.setString(6,accion);
 
             rs = cmd.executeQuery();
