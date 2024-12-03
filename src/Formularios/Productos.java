@@ -8,129 +8,36 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.sql.CallableStatement;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class Productos extends javax.swing.JFrame {
-
+MantenimientoProductos mantp = new MantenimientoProductos();
     private ImageIcon imagen;
     private Icon icono;
-    
+   int fila;
+   int codigo;
+    ConexionSQL conexion = new ConexionSQL();
     public Productos() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo5,"src/Formularios/logoSiglas.jpg");
-        
+        mantp.cargartabla(jProductos, 0, "", "", 0.0, 0, 0, "mostrar");
         llenarComboProveedores();
     }
     
     private void llenarComboProveedores() {
-    ConexionSQL conexion = new ConexionSQL();
-    Connection conn = conexion.establecerConexion();
-
-    if (conn != null) {
-        try {
-            String query = "SELECT Nombre FROM Proveedores";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            // Limpiar elementos previos en el combo
-            cmbProveedor.removeAllItems();
-
-            while (rs.next()) {
-                cmbProveedor.addItem(rs.getString("Nombre"));
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar el combo de proveedores: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+ cmbProveedor.setModel(mantp.llenarproveedores());
 }
     
-    private void guardarProducto() {
-    // Validar que los campos no estén vacíos
-    String nombre = txtNombre.getText().trim();
-    String descripcion = txtDescripcion.getText().trim();
-    String precioText = txtPrecio.getText().trim();
-    String stockText = txtStock.getText().trim();
-    String proveedorSeleccionado = (String) cmbProveedor.getSelectedItem();
-
-    if (nombre.isEmpty() || precioText.isEmpty() || stockText.isEmpty() || proveedorSeleccionado == null) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Validar datos numéricos
-    double precio;
-    int stock;
-    try {
-        precio = Double.parseDouble(precioText);
-        stock = Integer.parseInt(stockText);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El precio y el stock deben ser valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Establecer conexión a la base de datos
-    ConexionSQL conexion = new ConexionSQL();
-    Connection conn = conexion.establecerConexion();
-
-    if (conn != null) {
-        try {
-            // Obtener el IdProveedor basado en el nombre seleccionado en el combo
-            String queryProveedor = "SELECT IdProveedor FROM Proveedores WHERE Nombre = ?";
-            PreparedStatement stmtProveedor = conn.prepareStatement(queryProveedor);
-            stmtProveedor.setString(1, proveedorSeleccionado);
-            ResultSet rs = stmtProveedor.executeQuery();
-
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(this, "Proveedor no válido seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            int idProveedor = rs.getInt("IdProveedor");
-
-            // Insertar producto en la tabla Productos
-            String queryInsert = "INSERT INTO Productos (Nombre, Descripcion, Precio, Stock, IdProveedor) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement stmtInsert = conn.prepareStatement(queryInsert);
-
-            stmtInsert.setString(1, nombre);
-            stmtInsert.setString(2, descripcion);
-            stmtInsert.setDouble(3, precio);
-            stmtInsert.setInt(4, stock);
-            stmtInsert.setInt(5, idProveedor);
-
-            stmtInsert.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Producto guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            // Limpiar campos
-            txtNombre.setText("");
-            txtDescripcion.setText("");
-            txtPrecio.setText("");
-            txtStock.setText("");
-            cmbProveedor.setSelectedIndex(-1);
-
-            stmtInsert.close();
-            rs.close();
-            stmtProveedor.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el producto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
+   
 
 
 
@@ -154,7 +61,6 @@ public class Productos extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -171,7 +77,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUsuario3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cmbbusqueda = new javax.swing.JComboBox<>();
         cmbProveedor = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
 
@@ -214,15 +120,20 @@ public class Productos extends javax.swing.JFrame {
 
         jProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nombre", "Descripcion", "Precio", "Stock"
             }
         ));
+        jProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jProductos);
 
         jPanel8.setBackground(new java.awt.Color(237, 235, 236));
@@ -241,14 +152,9 @@ public class Productos extends javax.swing.JFrame {
         btnAgregar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("AGREGAR");
-
-        btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
-        btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("GUARDAR");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -256,6 +162,11 @@ public class Productos extends javax.swing.JFrame {
         btnEliminar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnCerrarSesion.setBackground(new java.awt.Color(102, 0, 0));
         btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -296,11 +207,9 @@ public class Productos extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegresar))
-                .addGap(42, 42, 42)
+                .addGap(218, 218, 218)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -314,17 +223,16 @@ public class Productos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 20, Short.MAX_VALUE)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSalir)))
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -332,7 +240,6 @@ public class Productos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
         jLabel3.setText("NOMBRE:");
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -350,7 +257,6 @@ public class Productos extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(39, 65, 140));
         jLabel4.setText("PRECIO:");
 
-        txtPrecio.setBackground(new java.awt.Color(255, 255, 255));
         txtPrecio.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(39, 65, 140));
         txtPrecio.addActionListener(new java.awt.event.ActionListener() {
@@ -368,7 +274,6 @@ public class Productos extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
         jLabel6.setText("STOCK:");
 
-        txtStock.setBackground(new java.awt.Color(255, 255, 255));
         txtStock.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtStock.setForeground(new java.awt.Color(39, 65, 140));
         txtStock.addActionListener(new java.awt.event.ActionListener() {
@@ -386,7 +291,6 @@ public class Productos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(39, 65, 140));
         jLabel1.setText("DESCRIPCION:");
 
-        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
         txtDescripcion.setColumns(20);
         txtDescripcion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtDescripcion.setForeground(new java.awt.Color(39, 65, 140));
@@ -402,10 +306,12 @@ public class Productos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(39, 65, 140));
         jLabel2.setText("BUSCAR:");
 
-        txtUsuario3.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario3.setForeground(new java.awt.Color(39, 65, 140));
         txtUsuario3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuario3KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUsuario3KeyTyped(evt);
             }
@@ -415,12 +321,15 @@ public class Productos extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
         jLabel7.setText("Buscar Por:");
 
-        jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox4.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbbusqueda.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        cmbbusqueda.setForeground(new java.awt.Color(39, 65, 140));
+        cmbbusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--seleccione--", "Proveedor", "Stock", "Precio", " " }));
+        cmbbusqueda.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbbusquedaItemStateChanged(evt);
+            }
+        });
 
-        cmbProveedor.setBackground(new java.awt.Color(255, 255, 255));
         cmbProveedor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbProveedor.setForeground(new java.awt.Color(39, 65, 140));
         cmbProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -471,10 +380,10 @@ public class Productos extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 6, Short.MAX_VALUE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +395,7 @@ public class Productos extends javax.swing.JFrame {
                             .addComponent(txtUsuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox4))
+                            .addComponent(cmbbusqueda))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -564,7 +473,19 @@ public class Productos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+    String precioText = txtPrecio.getText().trim();
+    String stockText = txtStock.getText().trim();
+    String proveedorSeleccionado = (String) cmbProveedor.getSelectedItem();
+    
+        if (nombre.isEmpty() || precioText.isEmpty() || stockText.isEmpty() || proveedorSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+        mantp.mantenimientoproductos(0, nombre, descripcion, Double.valueOf(precioText),Integer.parseInt(stockText),cmbProveedor.getSelectedIndex(), "actualizar");
+        mantp.cargartabla(jProductos, 0, "", "", 0.0, 0, 0, "mostrar");
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -588,13 +509,37 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        if (evt.getKeyChar() == ' ') {
-            evt.consume();
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || 
+        evt.getKeyCode() == KeyEvent.VK_DELETE || 
+        evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+        return; 
+    }
+      if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        evt.consume();
+    }
+        char c = evt.getKeyChar();
+     
+        if(!Character.isLetter(c)){
+        evt.consume();
+        
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
-        // TODO add your handling code here:
+       if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || 
+        evt.getKeyCode() == KeyEvent.VK_DELETE || 
+        evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+        return; 
+    }
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        evt.consume();
+    }
+        char c = evt.getKeyChar();
+     
+        if(!Character.isDigit(c)){
+        evt.consume();
+        
+        }
     }//GEN-LAST:event_txtPrecioKeyTyped
 
     private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
@@ -602,7 +547,14 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtStockKeyTyped
 
     private void txtUsuario3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario3KeyTyped
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || 
+        evt.getKeyCode() == KeyEvent.VK_DELETE || 
+        evt.getKeyCode() == KeyEvent.VK_ENTER ) {
+        return; 
+    }
+      if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        evt.consume();
+    }
     }//GEN-LAST:event_txtUsuario3KeyTyped
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -622,12 +574,90 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbProveedorActionPerformed
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-         guardarProducto();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+     String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+    String precioText = txtPrecio.getText().trim();
+    String stockText = txtStock.getText().trim();
+    String proveedorSeleccionado = (String) cmbProveedor.getSelectedItem();
+    
+        if (nombre.isEmpty() || precioText.isEmpty() || stockText.isEmpty() || proveedorSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+        mantp.mantenimientoproductos(0, nombre, descripcion, Double.valueOf(precioText),Integer.parseInt(stockText),cmbProveedor.getSelectedIndex(), "agregar");
+        mantp.cargartabla(jProductos, 0, "", "", 0.0, 0, 0, "mostrar");
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       String nombre = txtNombre.getText().trim();
+    String descripcion = txtDescripcion.getText().trim();
+    String precioText = txtPrecio.getText().trim();
+    String stockText = txtStock.getText().trim();
+
+    
+        mantp.mantenimientoproductos(codigo, nombre, descripcion, Double.valueOf(precioText),Integer.parseInt(stockText),cmbProveedor.getSelectedIndex(), "agregar");
+        mantp.cargartabla(jProductos, 0, "", "", 0.0, 0, 0, "mostrar");
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProductosMouseClicked
+       try{
+       fila= jProductos.getSelectedRow();
+       codigo=Integer.parseInt(jProductos.getValueAt(fila, 0).toString());
+       ResultSet rs ;
+       Connection con=conexion.establecerConexion();
+       
+       CallableStatement cmd=con.prepareCall("{CALL sp_mostrarEmpleados(?)}");
+       cmd.setInt(1, codigo);
+       rs=cmd.executeQuery();
+       while(rs.next()){
+       
+       codigo=Integer.valueOf(rs.getInt("IdpProducto"));
+       txtNombre.setText(rs.getString("Nombre"));
+       txtDescripcion.setText(rs.getString("Descripcion"));
+       txtPrecio.setText(rs.getString("Precio"));
+       txtStock.setText(rs.getString("Stock"));
+       cmbProveedor.setSelectedItem(rs.getString("Nombre"));
+       }
+       }catch(SQLException ex){
+       
+       JOptionPane.showMessageDialog(null, ex.toString());
+       }
+    }//GEN-LAST:event_jProductosMouseClicked
+
+    private void txtUsuario3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario3KeyReleased
+       if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || 
+        evt.getKeyCode() == KeyEvent.VK_DELETE || 
+        evt.getKeyCode() == KeyEvent.VK_ENTER || 
+        evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        return; 
+    }else {
+        String dato = txtUsuario3.getText();
+       mantp.BuscarProductos(jProductos, dato, "NORMAL");
+       }
+    }//GEN-LAST:event_txtUsuario3KeyReleased
+
+    private void cmbbusquedaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbbusquedaItemStateChanged
+       switch(cmbbusqueda.getSelectedIndex()){
+               case 0 ->{
+               mantp.BuscarProductos(jProductos, "", "NORMAL");
+               } 
+               case 1 ->{
+                mantp.BuscarProductos(jProductos, cmbProveedor.getSelectedItem().toString(), "PROVEEDOR");
+               } 
+               case 2 ->{
+                  mantp.BuscarProductos(jProductos, cmbProveedor.getSelectedItem().toString(), "STOCK");
+               } 
+               case 3 ->{   
+                  mantp.BuscarProductos(jProductos, cmbProveedor.getSelectedItem().toString(), "PRECIO");} 
+               
+       
+       }
+    }//GEN-LAST:event_cmbbusquedaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -681,12 +711,11 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbProveedor;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> cmbbusqueda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
