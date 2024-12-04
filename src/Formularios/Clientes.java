@@ -540,7 +540,7 @@ public class Clientes extends javax.swing.JFrame {
             frmMAAC.setVisible(true);
             this.setVisible(false);
         }else if(rol.equals("ENF")||rol.equals("MIC")){
-            MenuENFMIC frmENFMIC = new MenuENFMIC();
+            MenuENFMIC frmENFMIC = new MenuENFMIC(IDEmp,rol);
             frmENFMIC.setVisible(true);
             this.setVisible(false);
         }

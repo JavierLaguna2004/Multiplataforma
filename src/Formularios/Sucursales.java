@@ -113,13 +113,10 @@ public class Sucursales extends javax.swing.JFrame {
 
         jSucursales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Sucursal", "Direccion"
             }
         ));
         jSucursales.addMouseListener(new java.awt.event.MouseAdapter() {

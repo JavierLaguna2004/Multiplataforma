@@ -45,7 +45,7 @@ public class MantenimientoEmpleados {
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         
-        modelo.addElement(new ComboEmpleado(0, "Seleccione: ")); 
+        modelo.addElement(new ComboPuesto(0, "Seleccione: ")); 
         try{
             Connection con = cone.establecerConexion();
             CallableStatement cmd = con.prepareCall("{CALL sp_puesto}");
@@ -53,7 +53,7 @@ public class MantenimientoEmpleados {
              while(rs.next()){
                   int idPuesto = rs.getInt(1);
                 String nombrePuesto = rs.getString(2);
-                modelo.addElement(new ComboEmpleado(idPuesto, nombrePuesto));
+                modelo.addElement(new ComboPuesto(idPuesto, nombrePuesto));
         }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null,ex.toString());

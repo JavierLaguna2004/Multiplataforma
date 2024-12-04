@@ -12,9 +12,9 @@ public class ComboPuesto {
     private int idPuesto;
     private String nombrePuesto;
 
-    public ComboPuesto(int idProveedor, String nombreProveedor) {
-        this.idPuesto = idProveedor;
-        this.nombrePuesto = nombreProveedor;
+    public ComboPuesto(int idPuesto, String nombrePuesto) {
+        this.idPuesto = idPuesto;
+        this.nombrePuesto = nombrePuesto;
     }
 
     public int getIdPuesto() {
