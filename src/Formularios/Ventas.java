@@ -83,6 +83,12 @@ public class Ventas extends javax.swing.JFrame {
         llenarpacientesproc();
         llenarsucursalesproc();
         llenarproductosproc();
+        
+        cmbBuscar.addItem("Seleccione: ");
+        cmbBuscar.addItem("ID Producto");
+        cmbBuscar.addItem("Nombre");
+        cmbBuscar.addItem("Cantidad");
+        cmbBuscar.addItem("Precio");
     }
     
     private Ventas(){}
@@ -326,7 +332,7 @@ public class Ventas extends javax.swing.JFrame {
         btnEliminarProducto = new javax.swing.JButton();
         btnAgregarProducto = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        cmbFiltroBuscar = new javax.swing.JComboBox<>();
+        cmbBuscar = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -373,10 +379,13 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setForeground(new java.awt.Color(39, 65, 140));
         jLabel15.setText("PRODUCTO:");
 
+        jLabel16.setForeground(new java.awt.Color(39, 65, 140));
         jLabel16.setText("CANTIDAD:");
 
+        jLabel17.setForeground(new java.awt.Color(39, 65, 140));
         jLabel17.setText("PRECIO:");
 
         txtPrecio.setEnabled(false);
@@ -416,8 +425,10 @@ public class Ventas extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
+        jLabel1.setForeground(new java.awt.Color(39, 65, 140));
         jLabel1.setText("SUCURSAL:");
 
+        jLabel18.setForeground(new java.awt.Color(39, 65, 140));
         jLabel18.setText("PACIENTE:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -477,15 +488,19 @@ public class Ventas extends javax.swing.JFrame {
         jLabel9.setText("ISV:");
 
         txtSubtotal.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        txtSubtotal.setForeground(new java.awt.Color(39, 65, 140));
         txtSubtotal.setText("00.00");
 
         txtDescuento.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        txtDescuento.setForeground(new java.awt.Color(39, 65, 140));
         txtDescuento.setText("00.00");
 
         txtISV.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        txtISV.setForeground(new java.awt.Color(39, 65, 140));
         txtISV.setText("00.00");
 
         txtTotal.setFont(new java.awt.Font("SansSerif", 1, 48)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(39, 65, 140));
         txtTotal.setText("00.00");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -529,6 +544,9 @@ public class Ventas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnCerrarSesion.setBackground(new java.awt.Color(39, 65, 140));
+        btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSesion.setText("CERRAR SESION");
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -536,6 +554,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setBackground(new java.awt.Color(39, 65, 140));
+        btnSalir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -543,6 +564,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("CERRAR CAJA");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -550,6 +574,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnPacientes.setBackground(new java.awt.Color(39, 65, 140));
+        btnPacientes.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnPacientes.setForeground(new java.awt.Color(255, 255, 255));
         btnPacientes.setText("NUEVO CLIENTE");
         btnPacientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,6 +584,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnGuardarVenta.setBackground(new java.awt.Color(39, 65, 140));
+        btnGuardarVenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnGuardarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarVenta.setText("GENERAR VENTA");
         btnGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,6 +594,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnFactura.setBackground(new java.awt.Color(39, 65, 140));
+        btnFactura.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnFactura.setForeground(new java.awt.Color(255, 255, 255));
         btnFactura.setText("IMPRIMIR FACTURA");
         btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -571,6 +604,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnLimpieza.setBackground(new java.awt.Color(39, 65, 140));
+        btnLimpieza.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnLimpieza.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpieza.setText("NUEVA VENTA");
         btnLimpieza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -578,6 +614,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarVenta.setBackground(new java.awt.Color(39, 65, 140));
+        btnCancelarVenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnCancelarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelarVenta.setText("CANCELAR VENTA");
         btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -585,6 +624,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarProducto.setBackground(new java.awt.Color(39, 65, 140));
+        btnEliminarProducto.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarProducto.setText("ELIMINAR PRODUCTO");
         btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -592,6 +634,9 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarProducto.setBackground(new java.awt.Color(39, 65, 140));
+        btnAgregarProducto.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnAgregarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarProducto.setText("AÑADIR PRODUCTO");
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -600,6 +645,7 @@ public class Ventas extends javax.swing.JFrame {
         });
 
         jLabel14.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(39, 65, 140));
         jLabel14.setText("CARGANDO FECHA Y HORA...");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -666,8 +712,8 @@ public class Ventas extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        cmbFiltroBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        cmbFiltroBuscar.setForeground(new java.awt.Color(39, 65, 140));
+        cmbBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        cmbBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
         txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
         txtBuscar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
@@ -700,7 +746,7 @@ public class Ventas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbFiltroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(312, 312, 312))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -717,7 +763,7 @@ public class Ventas extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(cmbFiltroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(9, 9, 9)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -726,7 +772,7 @@ public class Ventas extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(78, 78, 78))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -741,7 +787,8 @@ public class Ventas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -752,7 +799,9 @@ public class Ventas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1019,8 +1068,8 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JButton btnPacientes;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbBuscar;
     private javax.swing.JComboBox<String> cmbCliente;
-    private javax.swing.JComboBox<String> cmbFiltroBuscar;
     private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JComboBox<String> cmbSucursal;
     private javax.swing.JLabel jLabel1;

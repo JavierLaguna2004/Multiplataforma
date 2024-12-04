@@ -66,9 +66,9 @@ public class Planillas extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPlanillas = new javax.swing.JTable();
-        txtUsuario3 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbBuscar = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -134,17 +134,17 @@ public class Planillas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jPlanillas);
 
-        txtUsuario3.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtUsuario3.setForeground(new java.awt.Color(39, 65, 140));
+        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
         jLabel7.setText("Buscar Por:");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(39, 65, 140));
+        cmbBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        cmbBuscar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        cmbBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
@@ -320,11 +320,11 @@ public class Planillas extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtUsuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)))
                 .addContainerGap())
@@ -334,9 +334,9 @@ public class Planillas extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -463,15 +463,7 @@ public class Planillas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-         if(rol.equals("GER")){
-            Menu frmM = new Menu(IDEmp,rol);
-            frmM.setVisible(true);
-            this.setVisible(false);
-        }else if(rol.equals("AAC")){
-            Menu frmM = new Menu(IDEmp,rol);
-            frmM.setVisible(true);
-            this.setVisible(false);
-        }
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
@@ -515,8 +507,8 @@ public class Planillas extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cmbBuscar;
     private javax.swing.JComboBox<String> cmbEmpleado;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -532,10 +524,10 @@ public class Planillas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTable jPlanillas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHoras;
     private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtSueldoHora;
-    private javax.swing.JTextField txtUsuario3;
     // End of variables declaration//GEN-END:variables
 }

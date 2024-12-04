@@ -38,6 +38,12 @@ public class Usuarios extends javax.swing.JFrame {
         this.IDEmp = IDEmp;
         this.rol = rol;
         
+        cmbBuscar.addItem("Seleccione: ");
+        cmbBuscar.addItem("Usuario");
+        cmbBuscar.addItem("Contrasena");
+        cmbBuscar.addItem("Rol");
+        cmbBuscar.addItem("IdEmpleado");
+        
         MU.cargartablaUsuarios(jUsuarios, 0, "1", "1", 0, 0,"mostrar");
     }
 
@@ -79,7 +85,7 @@ public class Usuarios extends javax.swing.JFrame {
         txtClave = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtUsuario1 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -87,7 +93,7 @@ public class Usuarios extends javax.swing.JFrame {
         cmbEmpleado = new javax.swing.JComboBox<>();
         cmbRol = new javax.swing.JComboBox<>();
         txtUsuario = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cmbBuscar = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -288,9 +294,9 @@ public class Usuarios extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Search.png"))); // NOI18N
         jLabel2.setText("BUSCAR:");
 
-        txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
+        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
@@ -321,9 +327,9 @@ public class Usuarios extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
 
-        jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox4.setForeground(new java.awt.Color(39, 65, 140));
+        cmbBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        cmbBuscar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        cmbBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -349,11 +355,11 @@ public class Usuarios extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -361,10 +367,10 @@ public class Usuarios extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4))
+                    .addComponent(cmbBuscar))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -589,9 +595,9 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbBuscar;
     private javax.swing.JComboBox<String> cmbEmpleado;
     private javax.swing.JComboBox<String> cmbRol;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -607,8 +613,8 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jUsuarios;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtClave;
     private javax.swing.JTextField txtUsuario;
-    private javax.swing.JTextField txtUsuario1;
     // End of variables declaration//GEN-END:variables
 }
