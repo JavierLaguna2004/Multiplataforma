@@ -266,25 +266,25 @@ public class MenuAAC extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        Ventas frmV = new Ventas();
+        Ventas frmV = new Ventas(IDEmp,rol);
         frmV.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        Clientes frmCl = new Clientes();
+        Clientes frmCl = new Clientes(IDEmp,rol);
         frmCl.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        Proveedores frmProve = new Proveedores();
+        Proveedores frmProve = new Proveedores(IDEmp,rol);
         frmProve.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        Productos frmPro = new Productos();
+        Productos frmPro = new Productos(IDEmp,rol);
         frmPro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProductosActionPerformed

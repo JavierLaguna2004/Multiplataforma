@@ -3,23 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Formularios;
-
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
+import java.sql.*;
 
-/**
- *
- * @author joser
- */
-public class MantenimientoEmpleados {
+public class MantenimientoVentas {
     ConexionSQL cone = new ConexionSQL();
-    
      public DefaultComboBoxModel llenarsucursal(){
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -40,20 +33,39 @@ public class MantenimientoEmpleados {
         return modelo;
     }
      
+     public DefaultComboBoxModel llenarpacientes(){
+        
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        
+        modelo.addElement("Seleccione: ");
+        try{
+            Connection con = cone.establecerConexion();
+            CallableStatement cmd = con.prepareCall("{CALL sp_pacientes}");
+            ResultSet rs = cmd.executeQuery();
+             while(rs.next()){
+                 int idPaciente = rs.getInt(1);
+                String nombrePaciente = rs.getString(2);
+                modelo.addElement(new ComboPaciente(idPaciente, nombrePaciente));
+        }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,ex.toString());
+        }
+        return modelo;
+    }
      
-     public DefaultComboBoxModel llenarpuesto(){
+     public DefaultComboBoxModel llenarproductos(){
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         
         modelo.addElement(new ComboEmpleado(0, "Seleccione: ")); 
         try{
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_puesto}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_productos}");
             ResultSet rs = cmd.executeQuery();
              while(rs.next()){
-                  int idPuesto = rs.getInt(1);
-                String nombrePuesto = rs.getString(2);
-                modelo.addElement(new ComboEmpleado(idPuesto, nombrePuesto));
+                  int idProducto = rs.getInt(1);
+                String nombreProducto = rs.getString(2);
+                modelo.addElement(new ComboProducto(idProducto, nombreProducto));
         }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null,ex.toString());
@@ -61,21 +73,19 @@ public class MantenimientoEmpleados {
         return modelo;
     }
     
-    public void mantenimientosempleados(int codigo, String nombre,String apellido,String correo, String direccion, String Jornada, int idSucursal, int idPuesto,String accion)
+    public void mantenimientosventas(int codigo, String fecha,double montototal,String metodopago, int idpaciente,int idempleado,String accion)
      {
          try{
              Connection con = cone.establecerConexion();
-             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?)}");
+             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoVentas(?,?,?,?,?,?,?)}");
          
              cmd.setInt(1,codigo);
-             cmd.setString(2, nombre);
-             cmd.setString(3, apellido);
-             cmd.setString(4, correo);
-             cmd.setString(5, direccion);
-             cmd.setString(6, Jornada);
-             cmd.setInt(7, idSucursal);
-             cmd.setInt(8, idPuesto);
-             cmd.setString(9, accion);
+             cmd.setString(2,fecha);
+             cmd.setDouble(3,montototal);
+             cmd.setString(4,metodopago);
+             cmd.setInt(5,idpaciente);
+             cmd.setInt(6,idempleado);
+             cmd.setString(7,accion);
              
              cmd.execute();
          }catch(Exception ex){
@@ -83,7 +93,7 @@ public class MantenimientoEmpleados {
              JOptionPane.showMessageDialog(null, ex.toString());}
      }
     
-    public void cargartablaEmpleados(JTable tabla, int codigo, String nombre,String apellido,String correo, String direccion, String Jornada, int idSucursal, int idPuesto,String accion) {
+    public void cargartablaVentas(JTable tabla, int codigo, String fecha,double montototal,String metodopago, int idpaciente,int idempleado,String accion) {
         DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
 
         modelotabla.setRowCount(0);
@@ -94,17 +104,15 @@ public class MantenimientoEmpleados {
 
         try {
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?)}");
-         
+            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoVentas(?,?,?,?,?,?,?)}");
+
              cmd.setInt(1,codigo);
-             cmd.setString(2, nombre);
-             cmd.setString(3, apellido);
-             cmd.setString(4, correo);
-             cmd.setString(5, direccion);
-             cmd.setString(6, Jornada);
-             cmd.setInt(7, idSucursal);
-             cmd.setInt(8, idPuesto);
-             cmd.setString(9, accion);
+             cmd.setString(2,fecha);
+             cmd.setDouble(3,montototal);
+             cmd.setString(4,metodopago);
+             cmd.setInt(5,idpaciente);
+             cmd.setInt(6,idempleado);
+             cmd.setString(7,accion);
 
             rs = cmd.executeQuery();
             rsmd = rs.getMetaData();

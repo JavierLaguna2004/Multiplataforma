@@ -328,49 +328,49 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        Usuarios frmU = new Usuarios();
+        Usuarios frmU = new Usuarios(IDEmp,rol);
         frmU.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnPuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuestosActionPerformed
-        Puestos frmPuestos = new Puestos();
+        Puestos frmPuestos = new Puestos(IDEmp,rol);
         frmPuestos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPuestosActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        Ventas frmV = new Ventas();
+        Ventas frmV = new Ventas(IDEmp,rol);
         frmV.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        Clientes frmCl = new Clientes();
+        Clientes frmCl = new Clientes(IDEmp,rol);
         frmCl.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        Empleados frmE = new Empleados();
+        Empleados frmE = new Empleados(IDEmp,rol);
         frmE.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalesActionPerformed
-        Sucursales frmS = new Sucursales();
+        Sucursales frmS = new Sucursales(IDEmp,rol);
         frmS.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSucursalesActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        Proveedores frmProve = new Proveedores();
+        Proveedores frmProve = new Proveedores(IDEmp,rol);
         frmProve.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        Productos frmPro = new Productos();
+        Productos frmPro = new Productos(IDEmp,rol);
         frmPro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProductosActionPerformed

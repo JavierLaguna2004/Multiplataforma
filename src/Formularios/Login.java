@@ -262,7 +262,7 @@ public class Login extends javax.swing.JFrame {
                     if (rolEmpleado.equals("GER")) {
                         Menu frmM = new Menu(IDemp,rolEmpleado);
                         frmM.setVisible(true);
-                    } else if (rolEmpleado.equals("ADM")) {
+                    } else if (rolEmpleado.equals("AAC")) {
                         MenuAAC frmMA = new MenuAAC(IDemp,rolEmpleado);
                         frmMA.setVisible(true);
                     } else if(rolEmpleado.equals("ENF") || rolEmpleado.equals("MIC")){
