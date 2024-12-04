@@ -77,4 +77,37 @@ public class MantenimientoClientes {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
     }
+    public void buscarPacientes(JTable tabla, String valor, String accion) {
+    DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
+    modelotabla.setRowCount(0); 
+
+    ResultSet rs;
+    ResultSetMetaData rsmd;
+    int columnas;
+
+    try {
+        Connection con = cone.establecerConexion(); 
+        CallableStatement cmd = con.prepareCall("{CALL sp_pacientes(?,?)}"); 
+
+        
+        cmd.setString(1, accion);
+        cmd.setString(2, valor);
+
+        rs = cmd.executeQuery(); 
+        rsmd = rs.getMetaData(); 
+        columnas = rsmd.getColumnCount();
+
+
+        while (rs.next()) {
+            Object[] filas = new Object[columnas];
+            for (int i = 0; i < columnas; i++) {
+                filas[i] = rs.getObject(i + 1); 
+            }
+            modelotabla.addRow(filas); 
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar pacientes: " + ex.getMessage());
+    }
+}
+
 }

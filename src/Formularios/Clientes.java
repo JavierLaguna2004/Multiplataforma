@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author joser
@@ -156,7 +157,6 @@ public class Clientes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jClientes);
 
-        txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(39, 65, 140));
 
@@ -164,11 +164,9 @@ public class Clientes extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
         jLabel3.setText("NOMBRE:");
 
-        cmbBuscar.setBackground(new java.awt.Color(255, 255, 255));
         cmbBuscar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cmbBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
 
@@ -180,7 +178,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(39, 65, 140));
         jLabel4.setText("CORREO:");
 
-        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
         txtBuscar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtBuscar.setForeground(new java.awt.Color(39, 65, 140));
 
@@ -188,7 +185,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
         jLabel6.setText("DIRECCION:");
 
-        txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(39, 65, 140));
 
@@ -196,7 +192,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
         jLabel8.setText("TELEFONO:");
 
-        txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setColumns(20);
         txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(39, 65, 140));
@@ -333,7 +328,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
         jLabel9.setText("APELLIDO:");
 
-        txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(39, 65, 140));
 
@@ -342,6 +336,11 @@ public class Clientes extends javax.swing.JFrame {
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add-circle.png"))); // NOI18N
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -373,7 +372,7 @@ public class Clientes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,9 +380,9 @@ public class Clientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56))
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -545,10 +544,62 @@ public class Clientes extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_btnRegresarActionPerformed
+public void BuscarPacientes(String valor, String accion) {
+    DefaultTableModel modelo = (DefaultTableModel) jClientes.getModel(); 
+    modelo.setRowCount(0); 
+
+    try {
+        Connection con = cone.establecerConexion();
+        CallableStatement cmd = con.prepareCall("{CALL sp_pacientes(?,?)}");
+        cmd.setString(1, accion);
+        cmd.setString(2, valor); 
+        
+        ResultSet rs = cmd.executeQuery();
+        
+        while (rs.next()) {
+            Object[] fila = {
+                rs.getInt("Id"),        
+                rs.getString("Nombre"),
+                rs.getString("Apellido"),
+                rs.getString("Correo"),
+                rs.getString("Telefono")
+            };
+            modelo.addRow(fila); 
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar pacientes: " + ex.getMessage());
+    }
+}
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+    String filtro = cmbBuscar.getSelectedItem().toString(); 
+    String valor = txtBuscar.getText().toString(); 
+    String accion = "";
+
+    switch (cmbBuscar.getSelectedIndex()) {
+        case 0:
+            accion = "Nombre";
+            break;
+        case 1:
+            accion = "Apellido";
+            break;
+        case 2:
+            accion = "Correo";
+            break;
+        case 3:
+            accion = "Telefono";
+            break;
+        default:
+            JOptionPane.showMessageDialog(null, "Seleccione un filtro de búsqueda válido");
+            return; 
+    }
+    System.out.println("Buscando con acción: " + accion + " y valor: " + valor);
+    MU.buscarPacientes(jClientes, valor, accion);
+    }//GEN-LAST:event_btnBuscarMouseClicked
 
     /**
      * @param args the command line arguments
