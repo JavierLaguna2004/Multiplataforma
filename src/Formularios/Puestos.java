@@ -9,19 +9,35 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
 import javax.swing.JOptionPane;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-public class Puestos extends javax.swing.JFrame {
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.ComboBoxModel;
+import javax.swing.JTable;
+import javax.swing.DefaultComboBoxModel;
 
+public class Puestos extends javax.swing.JFrame {
+       private ConexionSQL c;
     private ImageIcon imagen;
     private Icon icono;
+    int fila ;
+    int codigo;
+            String nombre;
+    ConexionSQL conexion = new ConexionSQL();
+    
+    
+    mantenimientoPuestos mantenimiento = new mantenimientoPuestos();
     
     public Puestos() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.c = new ConexionSQL();
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
     }
     
@@ -56,6 +72,10 @@ public class Puestos extends javax.swing.JFrame {
         txtNombre.setText("");
         txtDescripcion.setText("");
     }
+     
+     
+     
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,9 +105,9 @@ public class Puestos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtUsuario1 = new javax.swing.JTextField();
+        txtBuscarUsuario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBoxitems = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
@@ -132,15 +152,20 @@ public class Puestos extends javax.swing.JFrame {
 
         jPuestos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Nombre", "Descripcion"
             }
         ));
+        jPuestos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPuestosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jPuestos);
 
         jPanel8.setBackground(new java.awt.Color(237, 235, 236));
@@ -159,6 +184,11 @@ public class Puestos extends javax.swing.JFrame {
         btnAgregar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -174,6 +204,11 @@ public class Puestos extends javax.swing.JFrame {
         btnEliminar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnCerrarSesion.setBackground(new java.awt.Color(102, 0, 0));
         btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -253,7 +288,6 @@ public class Puestos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
         jLabel3.setText("NOMBRE:");
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -271,12 +305,11 @@ public class Puestos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(39, 65, 140));
         jLabel2.setText("BUSCAR:");
 
-        txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtBuscarUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtBuscarUsuario.setForeground(new java.awt.Color(39, 65, 140));
+        txtBuscarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
+                txtBuscarUsuarioKeyTyped(evt);
             }
         });
 
@@ -284,16 +317,14 @@ public class Puestos extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
         jLabel7.setText("Buscar Por:");
 
-        jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox4.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxitems.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jComboBoxitems.setForeground(new java.awt.Color(39, 65, 140));
+        jComboBoxitems.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente de Sucursal ", "Atencion al Cliente ", "Enfermeras", "Microbiologos " }));
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(39, 65, 140));
         jLabel4.setText("DESCRIPCION:");
 
-        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
         txtDescripcion.setColumns(20);
         txtDescripcion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtDescripcion.setForeground(new java.awt.Color(39, 65, 140));
@@ -325,11 +356,11 @@ public class Puestos extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxitems, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -338,10 +369,10 @@ public class Puestos extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4))
+                    .addComponent(jComboBoxitems))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -407,7 +438,12 @@ public class Puestos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        String nombrePuesto = txtNombre.getText();
+    String descripcionPuesto = txtDescripcion.getText();
+     mantenimiento.agregarPuesto(nombrePuesto, descripcionPuesto);
+
+    mantenimiento.cargarTabla(jPuestos);
+    
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -435,9 +471,9 @@ public class Puestos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreKeyTyped
 
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
+    private void txtBuscarUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
+    }//GEN-LAST:event_txtBuscarUsuarioKeyTyped
 
     private void txtDescripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescripcionMouseClicked
         // TODO add your handling code here:
@@ -450,6 +486,47 @@ public class Puestos extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        guardarPuesto();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       String nombrePuesto = txtNombre.getText(); 
+    String descripcionPuesto = txtDescripcion.getText(); 
+    
+    mantenimiento.agregarPuesto(nombrePuesto, descripcionPuesto);
+
+    mantenimiento.cargarTabla(jPuestos);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void jPuestosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPuestosMouseClicked
+        try {
+        int fila = jPuestos.getSelectedRow();
+        if (fila != -1) { 
+            int idPuesto = Integer.parseInt(jPuestos.getValueAt(fila, 0).toString()); 
+
+            ResultSet rs;
+            Connection con = c.establecerConexion();
+            CallableStatement cmd = con.prepareCall("{CALL sp_mostrarpuestoporid(?)}");
+            cmd.setInt(1, idPuesto); 
+            rs = cmd.executeQuery();
+            if (rs.next()) { 
+                txtNombre.setText(rs.getString("Nombre")); 
+                txtDescripcion.setText(rs.getString("Descripcion"));
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.toString());
+    }    
+    }//GEN-LAST:event_jPuestosMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+     int filaSeleccionada = jPuestos.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(null, "Selecciona un puesto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    String nombrePuesto = (String) jPuestos.getValueAt(filaSeleccionada, 1);
+    int idPuesto = (int) jPuestos.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la primera columna
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -507,7 +584,7 @@ public class Puestos extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBoxitems;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -522,8 +599,8 @@ public class Puestos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JTextField txtBuscarUsuario;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtUsuario1;
     // End of variables declaration//GEN-END:variables
 }
