@@ -104,6 +104,7 @@ public class Empleados extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnCerrarSesion1 = new javax.swing.JButton();
+        btnAgregar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -158,16 +159,6 @@ public class Empleados extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
@@ -180,16 +171,6 @@ public class Empleados extends javax.swing.JFrame {
         txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(39, 65, 140));
-        txtApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoActionPerformed(evt);
-            }
-        });
-        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtApellidoKeyTyped(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
@@ -198,11 +179,6 @@ public class Empleados extends javax.swing.JFrame {
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(39, 65, 140));
-        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCorreoKeyTyped(evt);
-            }
-        });
 
         txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setColumns(20);
@@ -218,11 +194,6 @@ public class Empleados extends javax.swing.JFrame {
         txtUsuario3.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario3.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario3KeyTyped(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
@@ -230,7 +201,6 @@ public class Empleados extends javax.swing.JFrame {
 
         jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
@@ -239,11 +209,7 @@ public class Empleados extends javax.swing.JFrame {
         txtSalario.setBackground(new java.awt.Color(255, 255, 255));
         txtSalario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtSalario.setForeground(new java.awt.Color(39, 65, 140));
-        txtSalario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSalarioActionPerformed(evt);
-            }
-        });
+        txtSalario.setEnabled(false);
         txtSalario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtSalarioKeyTyped(evt);
@@ -257,11 +223,6 @@ public class Empleados extends javax.swing.JFrame {
         cmbjornada.setBackground(new java.awt.Color(255, 255, 255));
         cmbjornada.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbjornada.setForeground(new java.awt.Color(39, 65, 140));
-        cmbjornada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbjornadaActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(39, 65, 140));
@@ -270,11 +231,6 @@ public class Empleados extends javax.swing.JFrame {
         cmbsucursal.setBackground(new java.awt.Color(255, 255, 255));
         cmbsucursal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbsucursal.setForeground(new java.awt.Color(39, 65, 140));
-        cmbsucursal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbsucursalActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(39, 65, 140));
@@ -283,11 +239,6 @@ public class Empleados extends javax.swing.JFrame {
         cmbpuesto.setBackground(new java.awt.Color(255, 255, 255));
         cmbpuesto.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbpuesto.setForeground(new java.awt.Color(39, 65, 140));
-        cmbpuesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbpuestoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(39, 65, 140));
@@ -369,6 +320,17 @@ public class Empleados extends javax.swing.JFrame {
         btnCerrarSesion1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnCerrarSesion1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
+        btnAgregar1.setBackground(new java.awt.Color(39, 65, 140));
+        btnAgregar1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        btnAgregar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Contacts-book.png"))); // NOI18N
+        btnAgregar1.setText("PLANILLAS");
+        btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -376,40 +338,43 @@ public class Empleados extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrarSesion1)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnCerrarSesion1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9))))
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap(10, Short.MAX_VALUE)
+                        .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -578,51 +543,9 @@ public class Empleados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbpuestoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbpuestoActionPerformed
-
-    private void cmbsucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbsucursalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbsucursalActionPerformed
-
-    private void cmbjornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbjornadaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbjornadaActionPerformed
-
     private void txtSalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalarioKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSalarioKeyTyped
-
-    private void txtSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSalarioActionPerformed
-
-    private void txtUsuario3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario3KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario3KeyTyped
-
-    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCorreoKeyTyped
-
-    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoKeyTyped
-
-    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoActionPerformed
-
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        if (evt.getKeyChar() == ' ') {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         ComboSucursal sucursalSeleccionado = (ComboSucursal) cmbsucursal.getSelectedItem();
@@ -698,6 +621,12 @@ public class Empleados extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jEmpleadosMouseClicked
+
+    private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
+        Planillas FP = new Planillas();
+        FP.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAgregar1ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -748,6 +677,7 @@ public class Empleados extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnEliminar;

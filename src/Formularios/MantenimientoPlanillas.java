@@ -17,42 +17,40 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author joser
  */
-public class MantenimientoProductos {
+public class MantenimientoPlanillas {
     ConexionSQL cone = new ConexionSQL();
     
-     public DefaultComboBoxModel llenarproveedores(){
+    public DefaultComboBoxModel llenarempleados(){
         
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         
-        modelo.addElement("Seleccione: ");
+        modelo.addElement(new ComboEmpleado(0, "Seleccione: ")); 
         try{
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_proveedores}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_empleados}");
             ResultSet rs = cmd.executeQuery();
              while(rs.next()){
-                 int idProveedor = rs.getInt(1);
-                String nombreProveedor = rs.getString(2);
-                modelo.addElement(new ComboProveedor(idProveedor, nombreProveedor));
+                  int idEmpleado = rs.getInt(1);
+                String correo = rs.getString(2);
+                modelo.addElement(new ComboEmpleado(idEmpleado, correo));
         }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null,ex.toString());
         }
         return modelo;
     }
-     
-     public void mantenimientosproductos(int codigo, String nombre,String descripcion,double precio, int stock,int idProveedor,String accion)
+    
+    public void mantenimientoplanillas(int codigo, String fecha,double salario,int idempleado, String accion)
      {
          try{
              Connection con = cone.establecerConexion();
-             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoProductos(?,?,?,?,?,?,?)}");
+             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoplanillas(?,?,?,?,?)}");
          
              cmd.setInt(1,codigo);
-             cmd.setString(2,nombre);
-             cmd.setString(3,descripcion);
-             cmd.setDouble(4,precio);
-             cmd.setInt(5,stock);
-             cmd.setInt(6,idProveedor);
-             cmd.setString(7,accion);
+             cmd.setString(2,fecha);
+             cmd.setDouble(3,salario);
+             cmd.setInt(4,idempleado);
+             cmd.setString(5,accion);
              
              cmd.execute();
          }catch(Exception ex){
@@ -60,7 +58,7 @@ public class MantenimientoProductos {
              JOptionPane.showMessageDialog(null, ex.toString());}
      }
     
-    public void cargartablaProductos(JTable tabla, int codigo, String nombre,String descripcion,double precio, int stock,int idProveedor,String accion) {
+    public void cargartablaPlanillas(JTable tabla, int codigo, String fecha,double salario,int idempleado, String accion) {
         DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
 
         modelotabla.setRowCount(0);
@@ -71,15 +69,13 @@ public class MantenimientoProductos {
 
         try {
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoProductos(?,?,?,?,?,?,?)}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoplanillas(?,?,?,?,?)}");
 
-             cmd.setInt(1,codigo);
-             cmd.setString(2,nombre);
-             cmd.setString(3,descripcion);
-             cmd.setDouble(4,precio);
-             cmd.setInt(5,stock);
-             cmd.setInt(6,idProveedor);
-             cmd.setString(7,accion);
+            cmd.setInt(1,codigo);
+             cmd.setString(2,fecha);
+             cmd.setDouble(3,salario);
+             cmd.setInt(4,idempleado);
+             cmd.setString(5,accion);
 
             rs = cmd.executeQuery();
             rsmd = rs.getMetaData();

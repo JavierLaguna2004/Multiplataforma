@@ -128,25 +128,10 @@ public class Puestos extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
 
         txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
@@ -166,11 +151,6 @@ public class Puestos extends javax.swing.JFrame {
         txtDescripcion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtDescripcion.setForeground(new java.awt.Color(39, 65, 140));
         txtDescripcion.setRows(5);
-        txtDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtDescripcionMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(txtDescripcion);
 
         jPanel8.setBackground(new java.awt.Color(237, 235, 236));
@@ -402,32 +382,16 @@ public class Puestos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
-
-    private void txtDescripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescripcionMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescripcionMouseClicked
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
-        MU.mantenimientospuestos(codigo, "1", "1","actualizar");
+        MU.mantenimientospuestos(codigo, txtNombre.getText(), txtDescripcion.getText(), "actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
         MU.cargartablaPuestos(jPuestos, 0, "1", "1","mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        MU.mantenimientospuestos(0, "1", "1","guardar");
+        MU.mantenimientospuestos(0, txtNombre.getText(), txtDescripcion.getText(),"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido agregado!");
         MU.cargartablaPuestos(jPuestos, 0, "1", "1","mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed

@@ -258,11 +258,6 @@ public class Usuarios extends javax.swing.JFrame {
         txtClave.setBackground(new java.awt.Color(255, 255, 255));
         txtClave.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtClave.setForeground(new java.awt.Color(39, 65, 140));
-        txtClave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClaveActionPerformed(evt);
-            }
-        });
         txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtClaveKeyTyped(evt);
@@ -282,11 +277,6 @@ public class Usuarios extends javax.swing.JFrame {
         txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
@@ -308,34 +298,14 @@ public class Usuarios extends javax.swing.JFrame {
         cmbEmpleado.setBackground(new java.awt.Color(255, 255, 255));
         cmbEmpleado.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         cmbEmpleado.setForeground(new java.awt.Color(39, 65, 140));
-        cmbEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbEmpleadoActionPerformed(evt);
-            }
-        });
 
         cmbRol.setBackground(new java.awt.Color(255, 255, 255));
         cmbRol.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         cmbRol.setForeground(new java.awt.Color(39, 65, 140));
-        cmbRol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbRolActionPerformed(evt);
-            }
-        });
 
         txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuarioKeyTyped(evt);
-            }
-        });
 
         jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
@@ -464,30 +434,6 @@ public class Usuarios extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtClaveKeyTyped
-
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
-
-    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioKeyTyped
-
-    private void cmbEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmpleadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbEmpleadoActionPerformed
-
-    private void cmbRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRolActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbRolActionPerformed
-
-    private void txtClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtClaveActionPerformed
-
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         ComboRol rolSeleccionado = (ComboRol) cmbRol.getSelectedItem();

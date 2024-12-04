@@ -136,16 +136,6 @@ public class Proveedores extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
@@ -154,16 +144,6 @@ public class Proveedores extends javax.swing.JFrame {
         txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(39, 65, 140));
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
-        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTelefonoKeyTyped(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
@@ -174,11 +154,6 @@ public class Proveedores extends javax.swing.JFrame {
         txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(39, 65, 140));
         txtDireccion.setRows(5);
-        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtDireccionKeyPressed(evt);
-            }
-        });
         jScrollPane2.setViewportView(txtDireccion);
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -188,25 +163,10 @@ public class Proveedores extends javax.swing.JFrame {
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(39, 65, 140));
-        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCorreoActionPerformed(evt);
-            }
-        });
-        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCorreoKeyTyped(evt);
-            }
-        });
 
         txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(39, 65, 140));
@@ -459,38 +419,6 @@ public class Proveedores extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoKeyTyped
-
-    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
-
-    }//GEN-LAST:event_txtCorreoKeyTyped
-
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCorreoActionPerformed
-
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
-
-    private void txtDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDireccionKeyPressed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         MU.mantenimientosproveedores(codigo,txtNombre.getText(),txtTelefono.getText(),txtDireccion.getText(),txtCorreo.getText(),"actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
@@ -498,7 +426,7 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        MU.mantenimientosproveedores(codigo,txtNombre.getText(),txtTelefono.getText(),txtDireccion.getText(),txtCorreo.getText(),"agregar");
+        MU.mantenimientosproveedores(0,txtNombre.getText(),txtTelefono.getText(),txtDireccion.getText(),txtCorreo.getText(),"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido agregado!");
         MU.cargartablaProveedores(jProveedores, 0, "1","1","1","1","mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed

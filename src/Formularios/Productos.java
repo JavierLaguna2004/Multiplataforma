@@ -34,7 +34,7 @@ public class Productos extends javax.swing.JFrame {
         
         llenarproveedoresproc();
         
-        MU.cargartablaUsuarios(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
+        MU.cargartablaProductos(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
     }
     
     public void llenarproveedoresproc(){
@@ -520,18 +520,18 @@ public class Productos extends javax.swing.JFrame {
         ComboProveedor proveedorSeleccionado = (ComboProveedor) cmbProveedor.getSelectedItem();
         int idProveedor = proveedorSeleccionado.getIdProveedor();
         
-        MU.mantenimientosproductos(0,txtNombre.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()),idProveedor,"actualizar");
+        MU.mantenimientosproductos(codigo,txtNombre.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()),idProveedor,"actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
-        MU.cargartablaUsuarios(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
+        MU.cargartablaProductos(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         ComboProveedor proveedorSeleccionado = (ComboProveedor) cmbProveedor.getSelectedItem();
         int idProveedor = proveedorSeleccionado.getIdProveedor();
         
-        MU.mantenimientosproductos(0,txtNombre.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()),idProveedor,"guardar");
+        MU.mantenimientosproductos(0,txtNombre.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()),idProveedor,"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido guardado!");
-        MU.cargartablaUsuarios(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
+        MU.cargartablaProductos(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -551,13 +551,13 @@ public class Productos extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         MU.mantenimientosproductos(codigo, "1", "1", 0, 0, 0, "eliminar");
         JOptionPane.showMessageDialog(null, "El registro ha sido eliminado!");
-        MU.cargartablaUsuarios(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
+        MU.cargartablaProductos(jProductos, 0, "1", "1", 0, 0, 0, "mostrar");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jProductosMouseClicked
         try{
             fila = jProductos.getSelectedRow();
-            identidad1=jProductos.getValueAt(fila,0).toString();
+            identidad1=jProductos.getValueAt(fila,1).toString();
             ResultSet rs;
             Connection con = cone.establecerConexion();
             

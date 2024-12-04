@@ -155,7 +155,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtNombre" pref="214" max="32767" attributes="0"/>
+                              <Component id="txtSucursal" pref="214" max="32767" attributes="0"/>
                               <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -188,7 +188,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txtNombre" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                                      <Component id="txtSucursal" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                                       <Component id="jLabel3" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -248,7 +248,7 @@
                     <Property name="text" type="java.lang.String" value="DIRECCION:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtNombre">
+                <Component class="javax.swing.JTextField" name="txtSucursal">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -261,8 +261,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreActionPerformed"/>
-                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyTyped"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSucursalKeyTyped"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtUsuario1">
@@ -277,9 +276,6 @@
                       <Color blue="8c" green="41" red="27" type="rgb"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtUsuario1KeyTyped"/>
-                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane2">
                   <AuxValues>
