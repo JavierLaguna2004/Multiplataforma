@@ -24,7 +24,7 @@ public class ValidacionesClientes {
    
 public static boolean validarNumero(String texto, String mensaje) {
     try {
-//numero
+//numerofsafd
         if (texto.length() > 9) {
             JOptionPane.showMessageDialog(null, "El número no puede tener más de 9 dígitos.");
             return false;
