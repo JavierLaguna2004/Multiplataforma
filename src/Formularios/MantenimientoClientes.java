@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -19,12 +20,21 @@ import javax.swing.table.DefaultTableModel;
 public class MantenimientoClientes {
     
     ConexionSQL cone = new ConexionSQL();
+        public DefaultComboBoxModel llenarbusquedacb(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement("Seleccione");
+        modelo.addElement("Nombre");
+        modelo.addElement("Apellido");
+        modelo.addElement("Numero");
+        modelo.addElement("Correo");
+        return modelo;
+    }
     
     public void mantenimientosclientes(int codigo, String nombre,String apellido,String correo,String telefono, String direccion,String accion)
      {
          try{
              Connection con = cone.establecerConexion();
-             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoPacientes(?,?,?,?,?,?,?)}");
+             CallableStatement cmd = con.prepareCall("{CALL mantenimientoPacientes(?,?,?,?,?,?,?)}");
          
              cmd.setInt(1,codigo);
              cmd.setString(2,nombre);
@@ -40,7 +50,7 @@ public class MantenimientoClientes {
              JOptionPane.showMessageDialog(null, ex.toString());}
      }
     
-    public void cargartablaClientes(JTable tabla, int codigo, String nombre,String apellido,String correo,String telefono, String direccion,String accion) {
+public void cargartablaClientes(JTable tabla, int codigo, String nombre, String apellido, String correo, String telefono, String direccion, String accion) {
         DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
 
         modelotabla.setRowCount(0);
@@ -51,7 +61,7 @@ public class MantenimientoClientes {
 
         try {
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoPacientes(?,?,?,?,?,?,?)}");
+            CallableStatement cmd = con.prepareCall("{CALL mantenimientoPacientes(?,?,?,?,?,?,?)}");
 
              cmd.setInt(1,codigo);
              cmd.setString(2,nombre);
@@ -77,4 +87,32 @@ public class MantenimientoClientes {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
     }
+public void cargartablafiltro(JTable tabla, String parametro, String accion) {
+    DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+    modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+    ResultSet rs;
+    ResultSetMetaData rsmd;
+    int columnas;
+    try {
+        Connection con = cone.establecerConexion();
+        CallableStatement cmd = con.prepareCall("{CALL sp_BuscarPacientes(?, ?)}");
+        cmd.setString(1, accion); 
+        cmd.setString(2, parametro); 
+        
+        rs = cmd.executeQuery();
+        rsmd = rs.getMetaData();
+        columnas = rsmd.getColumnCount();
+        
+        while (rs.next()) {
+            Object[] fila = new Object[columnas];
+            for (int i = 0; i < columnas; i++) {
+                fila[i] = rs.getObject(i + 1);
+            }
+            modelo.addRow(fila); // Añadir la fila al modelo de la tabla
+        }   
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, ex.toString());
+    }
+}
+   
 }

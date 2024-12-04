@@ -14,7 +14,7 @@ import java.sql.*;
  * @author joser
  */
 public class Login extends javax.swing.JFrame {
-
+//prueba
     private ImageIcon imagen;
     private Icon icono;
     

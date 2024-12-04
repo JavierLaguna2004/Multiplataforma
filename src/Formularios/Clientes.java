@@ -8,6 +8,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,14 +28,186 @@ public class Clientes extends javax.swing.JFrame {
     
     int fila;
     int codigo;
+    String filtro;
     String identidad1 = "";
     
     public Clientes() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
-        
+        llenarcb();
         MU.cargartablaClientes(jClientes, 0, "1", "1", "1", "1","1","mostrar");
+            cbfiltros.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            String selectedItem = cbfiltros.getSelectedItem().toString();
+
+            switch (selectedItem) {
+                case "Nombre":
+                    filtro = "Nombre";
+                    txtNombre.setEditable(false);
+                    txtApellido.setEditable(false);
+                    txtCorreo.setEditable(false);
+                    txtTelefono.setEditable(false);
+                    txtDireccion.setEditable(false);
+                    limpiar();
+                    break;
+                case "Apellido":
+                    filtro = "Apellido";
+                    txtNombre.setEditable(false);
+                    txtApellido.setEditable(false);
+                    txtCorreo.setEditable(false);
+                    txtTelefono.setEditable(false);
+                    txtDireccion.setEditable(false);
+                    limpiar();
+                    break;
+                case "Numero":
+                    filtro = "Numero";
+                    txtNombre.setEditable(false);
+                    txtApellido.setEditable(false);
+                    txtCorreo.setEditable(false);
+                    txtTelefono.setEditable(false);
+                    txtDireccion.setEditable(false);
+                    txtbusqueda.setEditable(true);
+                    limpiar();
+                    break;
+                case "Correo":
+                    filtro = "Correo";
+                    txtNombre.setEditable(false);
+                    txtApellido.setEditable(false);
+                    txtCorreo.setEditable(false);
+                    txtTelefono.setEditable(false);
+                    txtDireccion.setEditable(false);
+                    txtbusqueda.setEditable(true);
+                    limpiar();
+                    break;
+                default:
+                    filtro = "Selccione";
+                    txtbusqueda.setEditable(false);
+                    txtNombre.setEditable(true);
+                    txtApellido.setEditable(true);
+                    txtCorreo.setEditable(true);
+                    txtTelefono.setEditable(true);
+                    txtDireccion.setEditable(true);
+                    break;
+            }
+        }
+    });
+                txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+        if (filtro.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Seleccione un filtro válido");
+                return;
+            }
+
+            switch (filtro) {
+                case "Nombre":
+                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Nombre");
+                    break;
+                case "Apellido":
+                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Apellido");
+                    break;
+                case "Correo":
+                   MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Correo");
+                    break;
+                case "Numero":
+                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Telefono");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        String texto;
+        switch (filtro){
+        case "Nombre":
+        texto= txtbusqueda.getText() + c;
+        if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el nombre")) {
+            evt.consume();
+        }
+        break;
+        case "Apellido":
+        texto= txtbusqueda.getText() + c;
+        if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
+            evt.consume();
+        }
+        break;
+        case "Correo":
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                String correo = txtCorreo.getText().trim();
+                if (!correo.isEmpty()) { // Validar solo si el campo no está vacío
+                    if (!ValidacionesClientes.validarCorreo(correo, "El formato del correo electrónico es inválido.")) {
+                        txtCorreo.requestFocus();
+                    }
+                }
+            }
+        });
+        break;
+        case "Telefono":
+        texto= txtbusqueda.getText() + c;
+        if (!ValidacionesClientes.validarNumero(texto, "Solo se permiten numeros")) {
+            evt.consume();
+        }
+        break;
+        default:
+            break;
+}
+    }
+});
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                String texto = txtNombre.getText() + c;
+
+
+                if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
+                    evt.consume();
+                }
+            }
+        });
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                String texto = txtApellido.getText() + c;
+
+
+                if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
+                    evt.consume();
+                }
+            }
+        });
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                String correo = txtCorreo.getText().trim();
+                if (!correo.isEmpty()) { // Validar solo si el campo no está vacío
+                    if (!ValidacionesClientes.validarCorreo(correo, "El formato del correo electrónico es inválido.")) {
+                        txtCorreo.requestFocus();
+                    }
+                }
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                String texto = txtTelefono.getText() + c;
+
+                // Validar que solo se ingresen números
+                if (!ValidacionesClientes.validarNumero(texto, "Solo se permiten números en el teléfono")) {
+                    evt.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -55,11 +229,11 @@ public class Clientes extends javax.swing.JFrame {
         jClientes = new javax.swing.JTable();
         txtCorreo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cbfiltros = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtUsuario1 = new javax.swing.JTextField();
+        txtbusqueda = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -121,7 +295,7 @@ public class Clientes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Correo", "Telefono", "Direccion"
+                "Id", "Nombre", "Apellido", "Correo", "Telefono"
             }
         ));
         jClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,7 +305,6 @@ public class Clientes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jClientes);
 
-        txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(39, 65, 140));
         txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -144,12 +317,9 @@ public class Clientes extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(39, 65, 140));
         jLabel3.setText("NOMBRE:");
 
-        jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jComboBox4.setForeground(new java.awt.Color(39, 65, 140));
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbfiltros.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        cbfiltros.setForeground(new java.awt.Color(39, 65, 140));
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -166,12 +336,11 @@ public class Clientes extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(39, 65, 140));
         jLabel4.setText("CORREO:");
 
-        txtUsuario1.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario1.setForeground(new java.awt.Color(39, 65, 140));
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtbusqueda.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtbusqueda.setForeground(new java.awt.Color(39, 65, 140));
+        txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyTyped(evt);
+                txtbusquedaKeyTyped(evt);
             }
         });
 
@@ -179,7 +348,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(39, 65, 140));
         jLabel6.setText("DIRECCION:");
 
-        txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefono.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(39, 65, 140));
         txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -192,7 +360,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
         jLabel8.setText("TELEFONO:");
 
-        txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setColumns(20);
         txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(39, 65, 140));
@@ -217,6 +384,11 @@ public class Clientes extends javax.swing.JFrame {
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Delete.png"))); // NOI18N
         btnAgregar.setText("LIMPIAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -324,7 +496,6 @@ public class Clientes extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
         jLabel9.setText("APELLIDO:");
 
-        txtApellido.setBackground(new java.awt.Color(255, 255, 255));
         txtApellido.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(39, 65, 140));
         txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -362,11 +533,11 @@ public class Clientes extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbfiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56))
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -376,9 +547,9 @@ public class Clientes extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4)
+                    .addComponent(cbfiltros)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,24 +635,31 @@ public class Clientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCorreoKeyTyped
 
-    private void txtUsuario1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyTyped
+    private void txtbusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedaKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyTyped
+    }//GEN-LAST:event_txtbusquedaKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
+        private void llenarcb(){
+        cbfiltros.setModel(MU.llenarbusquedacb());
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         MU.mantenimientosclientes(codigo,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtTelefono.getText(),txtDireccion.getText(),"actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
         MU.cargartablaClientes(jClientes, 0, "1", "1", "1", "1","1","mostrar");
+        limpiar();
+       cbfiltros.setSelectedIndex(0);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         MU.mantenimientosclientes(0,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtTelefono.getText(),txtDireccion.getText(),"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido agregado!");
         MU.cargartablaClientes(jClientes, 0, "1", "1", "1", "1","1","mostrar");
+        limpiar();
+        cbfiltros.setSelectedIndex(0);
+    
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -506,20 +684,23 @@ public class Clientes extends javax.swing.JFrame {
             MU.mantenimientosclientes(codigo,"1", "1", "1", "1","1","eliminar");
             JOptionPane.showMessageDialog(null, "El registro ha sido eliminado!");
             MU.cargartablaClientes(jClientes, 0, "1", "1", "1", "1","1","mostrar");
+            limpiar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClientesMouseClicked
+       cbfiltros.setSelectedIndex(0);
         try{
             fila = jClientes.getSelectedRow();
             identidad1=jClientes.getValueAt(fila,0).toString();
             ResultSet rs;
             Connection con = cone.establecerConexion();
             
-            CallableStatement cmd = con.prepareCall("{CALL sp_mostrarpacienteespecifico(?)}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_MostrarPacienteEspecifico(?)}");
             cmd.setString(1, identidad1);
             rs = cmd.executeQuery();
             
             while(rs.next()){
+                
                 codigo = Integer.valueOf(rs.getInt("IdPaciente"));
                 txtNombre.setText(rs.getString("Nombre"));
                 txtApellido.setText(rs.getString("Apellido"));
@@ -532,6 +713,18 @@ public class Clientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jClientesMouseClicked
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        limpiar();
+        cbfiltros.setSelectedIndex(0);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+    private void limpiar(){
+        txtbusqueda.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+        txtDireccion.setText("");
+    }
     /**
      * @param args the command line arguments
      */
@@ -588,8 +781,8 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbfiltros;
     private javax.swing.JTable jClientes;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -611,6 +804,6 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextArea txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtUsuario1;
+    private javax.swing.JTextField txtbusqueda;
     // End of variables declaration//GEN-END:variables
 }

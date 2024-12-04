@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 public class ConexionSQL {
     Connection conectar = null;
     
-    String usuario = "Ramon";
+    String usuario = "usrsql1";
     String contrasena = "123456";
     String bd = "SistemaFacturacionLaboratorio";
-    String ip = "localhost";
+    String ip = "SALVADORPCS\\SQLEXPRESS";
     String puerto = "1433";
     
     String cadena = "jdbc:sqlserver://" + ip + ":" + puerto + ";databaseName=" + bd+";"+"encrypt=true; trustServerCertificate=true;";
@@ -27,7 +27,7 @@ public class ConexionSQL {
     public Connection establecerConexion() {
         try {
             conectar = DriverManager.getConnection(cadena, usuario, contrasena);
-            JOptionPane.showMessageDialog(null, "Se conectó a la base de datos");
+            //JOptionPane.showMessageDialog(null, "Se conectó a la base de datos");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + e.toString());
         }
