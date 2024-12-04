@@ -99,18 +99,42 @@ public class Clientes extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Seleccione un filtro válido");
                 return;
             }
-
+            char c = evt.getKeyChar();
+            String texto="";
             switch (filtro) {
                 case "Nombre":
-                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Nombre");
+                 texto= txtbusqueda.getText() + c;
+                if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el nombre")) {
+                    evt.consume();
+                }
+                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Nombre");   
                     break;
                 case "Apellido":
+                     if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
+                        evt.consume();
+                    }
                     MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Apellido");
                     break;
                 case "Correo":
+                    texto= txtbusqueda.getText() + c;
+                   txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+
+                    public void focusLost(java.awt.event.FocusEvent evt) {
+                        String correo = txtCorreo.getText().trim();
+                        if (!correo.isEmpty()) { // Validar solo si el campo no está vacío
+                            if (!ValidacionesClientes.validarCorreo(correo, "El formato del correo electrónico es inválido.")) {
+                                txtCorreo.requestFocus();
+                            }
+                        }
+                    }
+                });  
                    MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Correo");
                     break;
                 case "Numero":
+                        texto= txtbusqueda.getText() + c;
+                        if (!ValidacionesClientes.validarNumero(texto, "Solo se permiten numeros")) {
+                            evt.consume();
+                        }
                     MU.cargartablafiltro(jClientes, txtbusqueda.getText(), "Telefono");
                     break;
                 default:
@@ -118,98 +142,7 @@ public class Clientes extends javax.swing.JFrame {
             }
         }
     });
-txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-    @Override
-    public void keyTyped(java.awt.event.KeyEvent evt) {
-        char c = evt.getKeyChar();
-        String texto;
-        switch (filtro){
-        case "Nombre":
-        texto= txtbusqueda.getText() + c;
-        if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el nombre")) {
-            evt.consume();
-        }
-        break;
-        case "Apellido":
-        texto= txtbusqueda.getText() + c;
-        if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
-            evt.consume();
-        }
-        break;
-        case "Correo":
-        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                String correo = txtCorreo.getText().trim();
-                if (!correo.isEmpty()) { // Validar solo si el campo no está vacío
-                    if (!ValidacionesClientes.validarCorreo(correo, "El formato del correo electrónico es inválido.")) {
-                        txtCorreo.requestFocus();
-                    }
-                }
-            }
-        });
-        break;
-        case "Telefono":
-        texto= txtbusqueda.getText() + c;
-        if (!ValidacionesClientes.validarNumero(texto, "Solo se permiten numeros")) {
-            evt.consume();
-        }
-        break;
-        default:
-            break;
-}
     }
-});
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                char c = evt.getKeyChar();
-                String texto = txtNombre.getText() + c;
-
-
-                if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
-                    evt.consume();
-                }
-            }
-        });
-
-        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                char c = evt.getKeyChar();
-                String texto = txtApellido.getText() + c;
-
-
-                if (!ValidacionesClientes.validarSoloLetras(texto, "Solo se permiten letras en el apellido")) {
-                    evt.consume();
-                }
-            }
-        });
-        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                String correo = txtCorreo.getText().trim();
-                if (!correo.isEmpty()) { // Validar solo si el campo no está vacío
-                    if (!ValidacionesClientes.validarCorreo(correo, "El formato del correo electrónico es inválido.")) {
-                        txtCorreo.requestFocus();
-                    }
-                }
-            }
-        });
-        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                char c = evt.getKeyChar();
-                String texto = txtTelefono.getText() + c;
-
-                // Validar que solo se ingresen números
-                if (!ValidacionesClientes.validarNumero(texto, "Solo se permiten números en el teléfono")) {
-                    evt.consume();
-                }
-            }
-        });
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -688,7 +621,7 @@ txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClientesMouseClicked
-       cbfiltros.setSelectedIndex(0);
+       
         try{
             fila = jClientes.getSelectedRow();
             identidad1=jClientes.getValueAt(fila,0).toString();
@@ -707,6 +640,7 @@ txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
                 txtCorreo.setText(rs.getString("Correo"));
                 txtTelefono.setText(rs.getString("Telefono"));
                 txtDireccion.setText(rs.getString("Direccion"));
+                cbfiltros.setSelectedIndex(0);
               }
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex.toString());
@@ -716,6 +650,7 @@ txtbusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         limpiar();
         cbfiltros.setSelectedIndex(0);
+        filtro="";
     }//GEN-LAST:event_btnAgregarActionPerformed
     private void limpiar(){
         txtbusqueda.setText("");

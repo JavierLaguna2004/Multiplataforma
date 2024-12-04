@@ -88,30 +88,32 @@ public void cargartablaClientes(JTable tabla, int codigo, String nombre, String 
         }
     }
 public void cargartablafiltro(JTable tabla, String parametro, String accion) {
-    DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
     modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+
     ResultSet rs;
-    ResultSetMetaData rsmd;
-    int columnas;
+
     try {
         Connection con = cone.establecerConexion();
         CallableStatement cmd = con.prepareCall("{CALL sp_BuscarPacientes(?, ?)}");
-        cmd.setString(1, accion); 
-        cmd.setString(2, parametro); 
-        
+        cmd.setString(1, accion);
+        cmd.setString(2, parametro);
+
         rs = cmd.executeQuery();
-        rsmd = rs.getMetaData();
-        columnas = rsmd.getColumnCount();
+
         
         while (rs.next()) {
-            Object[] fila = new Object[columnas];
-            for (int i = 0; i < columnas; i++) {
-                fila[i] = rs.getObject(i + 1);
-            }
-            modelo.addRow(fila); // Añadir la fila al modelo de la tabla
-        }   
+            Object[] fila = {
+                rs.getInt("Id"),        
+                rs.getString("Nombre"),
+                rs.getString("Apellido"), 
+                rs.getString("Correo"), 
+                rs.getString("Telefono") 
+            };
+            modelo.addRow(fila); 
+        }
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, ex.toString());
+        JOptionPane.showMessageDialog(null, "Error al cargar los datos: " + ex.toString());
     }
 }
    
