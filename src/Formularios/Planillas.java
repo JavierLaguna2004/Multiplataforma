@@ -20,13 +20,19 @@ public class Planillas extends javax.swing.JFrame {
     int codigo;
     String identidad1 = "";
     
+     private int IDEmp;
+     private String rol;
+    
     MantenimientoPlanillas MP = new MantenimientoPlanillas();
     ConexionSQL cone = new ConexionSQL();
     
-    public Planillas() {
+    public Planillas(int IDEmp, String rol) {
         initComponents();
         setLocationRelativeTo(null);
         llenarempleadosproc();
+        
+        this.IDEmp = IDEmp;
+        this.rol = rol;
         
         MP.cargartablaPlanillas(jPlanillas,0,"1",0,0,"mostrar");
     }
@@ -34,6 +40,19 @@ public class Planillas extends javax.swing.JFrame {
    public void llenarempleadosproc(){
         cmbEmpleado.setModel(MP.llenarempleados());
     }
+   
+   private Planillas(){}
+   
+   public void CalcularSueldo(){
+       double horastrabajadas,sueldohora,total;
+       
+       horastrabajadas=Double.parseDouble(txtHoras.getText());
+       sueldohora=Double.parseDouble(txtSueldoHora.getText());
+       
+       total = horastrabajadas*sueldohora;
+       
+       txtSalario.setText(Double.toString(total));
+   }
    
    
     @SuppressWarnings("unchecked")
@@ -58,7 +77,7 @@ public class Planillas extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        btnCerrarSesion1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnCalcularSueldo = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -116,7 +135,7 @@ public class Planillas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jPlanillas);
 
         txtUsuario3.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtUsuario3.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -124,6 +143,7 @@ public class Planillas extends javax.swing.JFrame {
         jLabel7.setText("Buscar Por:");
 
         jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -131,8 +151,9 @@ public class Planillas extends javax.swing.JFrame {
         jLabel8.setText("SALARIO:");
 
         txtSalario.setBackground(new java.awt.Color(255, 255, 255));
-        txtSalario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtSalario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSalario.setForeground(new java.awt.Color(39, 65, 140));
+        txtSalario.setEnabled(false);
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
@@ -166,13 +187,18 @@ public class Planillas extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion1.setBackground(new java.awt.Color(39, 65, 140));
-        btnCerrarSesion1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnCerrarSesion1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
-        btnCerrarSesion1.setText("REGRESAR");
-        btnCerrarSesion1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnCerrarSesion1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
+        btnRegresar.setText("REGRESAR");
+        btnRegresar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setBackground(new java.awt.Color(39, 65, 140));
         btnModificar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -191,7 +217,7 @@ public class Planillas extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCerrarSesion1)
+                .addComponent(btnRegresar)
                 .addGap(255, 255, 255)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -206,7 +232,7 @@ public class Planillas extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -234,11 +260,11 @@ public class Planillas extends javax.swing.JFrame {
         jLabel10.setText("FECHA:");
 
         txtHoras.setBackground(new java.awt.Color(255, 255, 255));
-        txtHoras.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtHoras.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtHoras.setForeground(new java.awt.Color(39, 65, 140));
 
         txtFecha.setBackground(new java.awt.Color(255, 255, 255));
-        txtFecha.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtFecha.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtFecha.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -250,7 +276,7 @@ public class Planillas extends javax.swing.JFrame {
         jLabel12.setText("SUELDO POR HORA:");
 
         txtSueldoHora.setBackground(new java.awt.Color(255, 255, 255));
-        txtSueldoHora.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtSueldoHora.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSueldoHora.setForeground(new java.awt.Color(39, 65, 140));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -398,12 +424,13 @@ public class Planillas extends javax.swing.JFrame {
         
         MP.mantenimientoplanillas(codigo,txtFecha.getText(),Double.parseDouble(txtSalario.getText()),idEmpleado,"agregar");
         JOptionPane.showMessageDialog(null, "La planilla se ha guardado!");
+        MP.cargartablaPlanillas(jPlanillas,0,"1",0,0,"mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jPlanillasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPlanillasMouseClicked
     try{
         fila = jPlanillas.getSelectedRow();
-        identidad1=jPlanillas.getValueAt(fila,0).toString();
+        identidad1=jPlanillas.getValueAt(fila,2).toString();
         ResultSet rs;
         Connection con = cone.establecerConexion();
 
@@ -423,7 +450,7 @@ public class Planillas extends javax.swing.JFrame {
     }//GEN-LAST:event_jPlanillasMouseClicked
 
     private void btnCalcularSueldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularSueldoActionPerformed
-        
+        CalcularSueldo();
     }//GEN-LAST:event_btnCalcularSueldoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -432,7 +459,20 @@ public class Planillas extends javax.swing.JFrame {
         
         MP.mantenimientoplanillas(codigo,txtFecha.getText(),Double.parseDouble(txtSalario.getText()),idEmpleado,"actualizar");
         JOptionPane.showMessageDialog(null, "La planilla se ha actualizado!");
+        MP.cargartablaPlanillas(jPlanillas,0,"1",0,0,"mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+         if(rol.equals("GER")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("AAC")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,9 +512,9 @@ public class Planillas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCalcularSueldo;
-    private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbEmpleado;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;

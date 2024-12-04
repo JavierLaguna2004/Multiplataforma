@@ -32,7 +32,7 @@ public class MantenimientoEmpleados {
              while(rs.next()){
                  int idSucursal = rs.getInt(1);
                 String nombreSucursal = rs.getString(2);
-                modelo.addElement(new ComboRol(idSucursal, nombreSucursal));
+                modelo.addElement(new ComboSucursal(idSucursal, nombreSucursal));
         }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null,ex.toString());
@@ -61,22 +61,21 @@ public class MantenimientoEmpleados {
         return modelo;
     }
     
-    public void mantenimientosempleados(int codigo, String nombre,String apellido,String correo, String direccion, double Salario, String Jornada, int idSucursal, int idPuesto,String accion)
+    public void mantenimientosempleados(int codigo, String nombre,String apellido,String correo, String direccion, String Jornada, int idSucursal, int idPuesto,String accion)
      {
          try{
              Connection con = cone.establecerConexion();
-             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?,?)}");
+             CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?)}");
          
              cmd.setInt(1,codigo);
              cmd.setString(2, nombre);
              cmd.setString(3, apellido);
              cmd.setString(4, correo);
              cmd.setString(5, direccion);
-             cmd.setDouble(6, Salario);
-             cmd.setString(7, Jornada);
-             cmd.setInt(8, idSucursal);
-             cmd.setInt(9, idPuesto);
-             cmd.setString(10, accion);
+             cmd.setString(6, Jornada);
+             cmd.setInt(7, idSucursal);
+             cmd.setInt(8, idPuesto);
+             cmd.setString(9, accion);
              
              cmd.execute();
          }catch(Exception ex){
@@ -84,7 +83,7 @@ public class MantenimientoEmpleados {
              JOptionPane.showMessageDialog(null, ex.toString());}
      }
     
-    public void cargartablaEmpleados(JTable tabla, int codigo, String nombre,String apellido,String correo, String direccion, double Salario, String Jornada, int idSucursal, int idPuesto,String accion) {
+    public void cargartablaEmpleados(JTable tabla, int codigo, String nombre,String apellido,String correo, String direccion, String Jornada, int idSucursal, int idPuesto,String accion) {
         DefaultTableModel modelotabla = (DefaultTableModel) tabla.getModel();
 
         modelotabla.setRowCount(0);
@@ -95,18 +94,17 @@ public class MantenimientoEmpleados {
 
         try {
             Connection con = cone.establecerConexion();
-            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_mantenimientoEmpleados(?,?,?,?,?,?,?,?,?)}");
          
              cmd.setInt(1,codigo);
              cmd.setString(2, nombre);
              cmd.setString(3, apellido);
              cmd.setString(4, correo);
              cmd.setString(5, direccion);
-             cmd.setDouble(6, Salario);
-             cmd.setString(7, Jornada);
-             cmd.setInt(8, idSucursal);
-             cmd.setInt(9, idPuesto);
-             cmd.setString(10, accion);
+             cmd.setString(6, Jornada);
+             cmd.setInt(7, idSucursal);
+             cmd.setInt(8, idPuesto);
+             cmd.setString(9, accion);
 
             rs = cmd.executeQuery();
             rsmd = rs.getMetaData();

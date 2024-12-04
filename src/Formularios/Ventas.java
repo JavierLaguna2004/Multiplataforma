@@ -34,6 +34,9 @@ public class Ventas extends javax.swing.JFrame {
     private Icon icono;
     private Timer timer;
     
+    private int IDEmp;
+    private String rol;
+    
     private ControlCajaMAN ControlCajaMAN;
     private Connection connection;
     
@@ -51,13 +54,16 @@ public class Ventas extends javax.swing.JFrame {
     String identidad1 = "";
     
     
-    public Ventas() {
+    public Ventas(int IDEmp, String rol) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
         
         this.connection = connection;
         this.ControlCajaMAN = new ControlCajaMAN(connection);
+        
+        this.IDEmp = IDEmp;
+        this.rol = rol;
         
         //Timer
         timer = new Timer(1000, new ActionListener() {
@@ -79,6 +85,7 @@ public class Ventas extends javax.swing.JFrame {
         llenarproductosproc();
     }
     
+    private Ventas(){}
     
     
     private void Limpiar(){
@@ -230,8 +237,6 @@ public class Ventas extends javax.swing.JFrame {
         String nombrePaciente = pacienteSeleccionado.getnombrePaciente();
         int idPaciente = pacienteSeleccionado.getIdPaciente();
 
-        int empID = 1;
-
         int numeroFactura = new Random().nextInt(100000);
 
         String fecha = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
@@ -255,7 +260,7 @@ public class Ventas extends javax.swing.JFrame {
         factura.append("FECHA: ").append(fecha).append("\n");
         factura.append("PACIENTE: ").append(nombrePaciente).append("\n");
         factura.append("ID PACIENTE: ").append(idPaciente).append("\n");
-        factura.append("ID EMPLEADO: ").append(empID).append("\n\n");
+        factura.append("ID EMPLEADO: ").append(IDEmp).append("\n\n");
         factura.append("DETALLE DE SERVICIOS:\n");
         factura.append(detalleServicios.toString()).append("\n");
         factura.append("SUBTOTAL: ").append(txtSubtotal.getText()).append("\n");
@@ -274,7 +279,7 @@ public class Ventas extends javax.swing.JFrame {
         factura.append("Esta factura es válida como comprobante de pago.\n Conserve este documento para futuras referencias.");
 
         JOptionPane.showMessageDialog(this, factura.toString(), "Factura", JOptionPane.INFORMATION_MESSAGE);
-        verificarYActualizarControlCaja(Double.parseDouble(txtTotal.getText()), empID);
+        verificarYActualizarControlCaja(Double.parseDouble(txtTotal.getText()), IDEmp);
 }
     
     @SuppressWarnings("unchecked")
@@ -755,6 +760,19 @@ public class Ventas extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         cerrarCaja();
+        if(rol.equals("GER")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("AAC")){
+            MenuAAC frmMAAC = new MenuAAC(IDEmp,rol);
+            frmMAAC.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("ENF")||rol.equals("MIC")){
+            MenuENFMIC frmENFMIC = new MenuENFMIC();
+            frmENFMIC.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -876,7 +894,7 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
     private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
-        Clientes frmClientes = new Clientes();
+        Clientes frmClientes = new Clientes(IDEmp,rol);
         frmClientes.setVisible(true);
     }//GEN-LAST:event_btnPacientesActionPerformed
 

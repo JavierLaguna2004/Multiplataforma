@@ -24,13 +24,21 @@ public class Sucursales extends javax.swing.JFrame {
     int codigo;
     String identidad1 = "";
     
-    public Sucursales() {
+    private int IDEmp;
+    private String rol;
+    
+    public Sucursales(int IDEmp, String rol) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
         
+        this.IDEmp = IDEmp;
+        this.rol = rol;
+        
         MU.cargartablaSucursales(jSucursales, 0, "1", "1","mostrar");
     }
+    
+    private Sucursales(){}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,7 +71,7 @@ public class Sucursales extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnCerrarSesion1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -221,13 +229,18 @@ public class Sucursales extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion1.setBackground(new java.awt.Color(39, 65, 140));
-        btnCerrarSesion1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnCerrarSesion1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
-        btnCerrarSesion1.setText("REGRESAR");
-        btnCerrarSesion1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnCerrarSesion1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
+        btnRegresar.setText("REGRESAR");
+        btnRegresar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -237,7 +250,7 @@ public class Sucursales extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnCerrarSesion1)
+                        .addComponent(btnRegresar)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +278,7 @@ public class Sucursales extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -429,6 +442,18 @@ public class Sucursales extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jSucursalesMouseClicked
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+         if(rol.equals("GER")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("AAC")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -480,10 +505,10 @@ public class Sucursales extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

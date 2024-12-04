@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Formularios;
+import Herencia.clsEmpleado;
+import Herencia.clsPersona;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.Icon;
@@ -20,25 +22,33 @@ public class Empleados extends javax.swing.JFrame {
 
     private ImageIcon imagen;
     private Icon icono;
-    MantenimientoEmpleados MU = new MantenimientoEmpleados();
+    MantenimientoEmpleados ME = new MantenimientoEmpleados();
     ConexionSQL cone = new ConexionSQL();
     
     int fila;
     int codigo;
     String identidad1 = "";
     
+    private int IDEmp;
+    private String rol;
     
-    public Empleados() {
+    
+    public Empleados(int IDEmp, String rol) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");   
+        
+        this.IDEmp = IDEmp;
+        this.rol = rol;
         
         llenarjornadasproc();
         llenarsucursalproc();
         llenarpuestoproc();
         
-        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+        ME.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", "1", 0, 0, "mostrar");
     }
+    
+    private Empleados(){}
     
     public void llenarjornadasproc(){
          DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -51,11 +61,11 @@ public class Empleados extends javax.swing.JFrame {
     }
     
     public void llenarsucursalproc(){
-        cmbsucursal.setModel(MU.llenarsucursal());
+        cmbsucursal.setModel(ME.llenarsucursal());
     }
     
     public void llenarpuestoproc(){
-        cmbpuesto.setModel(MU.llenarpuesto());
+        cmbpuesto.setModel(ME.llenarpuesto());
     }
 
     /**
@@ -87,8 +97,6 @@ public class Empleados extends javax.swing.JFrame {
         txtUsuario3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        txtSalario = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cmbjornada = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
@@ -103,7 +111,7 @@ public class Empleados extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnCerrarSesion1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         btnAgregar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -146,7 +154,7 @@ public class Empleados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Correo", "Direccion", "Salario", "Jornada", "Sucursal", "Puesto"
+                "Nombre", "Apellido", "Correo", "Direccion", "Jornada", "Sucursal", "Puesto"
             }
         ));
         jEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -157,7 +165,7 @@ public class Empleados extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jEmpleados);
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
-        txtNombre.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -169,7 +177,7 @@ public class Empleados extends javax.swing.JFrame {
         jLabel4.setText("APELLIDO:");
 
         txtApellido.setBackground(new java.awt.Color(255, 255, 255));
-        txtApellido.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtApellido.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(39, 65, 140));
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -177,12 +185,12 @@ public class Empleados extends javax.swing.JFrame {
         jLabel6.setText("CORREO:");
 
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
-        txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(39, 65, 140));
 
         txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         txtDireccion.setColumns(20);
-        txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtDireccion.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(39, 65, 140));
         txtDireccion.setRows(5);
         jScrollPane2.setViewportView(txtDireccion);
@@ -201,20 +209,6 @@ public class Empleados extends javax.swing.JFrame {
 
         jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setForeground(new java.awt.Color(39, 65, 140));
-
-        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(39, 65, 140));
-        jLabel8.setText("SALARIO:");
-
-        txtSalario.setBackground(new java.awt.Color(255, 255, 255));
-        txtSalario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtSalario.setForeground(new java.awt.Color(39, 65, 140));
-        txtSalario.setEnabled(false);
-        txtSalario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSalarioKeyTyped(evt);
-            }
-        });
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
@@ -312,13 +306,18 @@ public class Empleados extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion1.setBackground(new java.awt.Color(39, 65, 140));
-        btnCerrarSesion1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnCerrarSesion1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
-        btnCerrarSesion1.setText("REGRESAR");
-        btnCerrarSesion1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnCerrarSesion1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
+        btnRegresar.setText("REGRESAR");
+        btnRegresar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnAgregar1.setBackground(new java.awt.Color(39, 65, 140));
         btnAgregar1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -339,7 +338,7 @@ public class Empleados extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCerrarSesion1)
+                    .addComponent(btnRegresar)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,7 +369,7 @@ public class Empleados extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addContainerGap(10, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -407,27 +406,23 @@ public class Empleados extends javax.swing.JFrame {
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel9Layout.createSequentialGroup()
-                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel9Layout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
                                             .addComponent(jLabel9)
-                                            .addComponent(jLabel8))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cmbjornada, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel9Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbsucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cmbjornada, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                            .addGap(12, 12, 12)
+                                            .addComponent(jLabel11)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cmbpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel9Layout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cmbsucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 925, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,11 +469,7 @@ public class Empleados extends javax.swing.JFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbjornada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -489,7 +480,8 @@ public class Empleados extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)))
                 .addGap(30, 30, 30)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -543,10 +535,6 @@ public class Empleados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalarioKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSalarioKeyTyped
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         ComboSucursal sucursalSeleccionado = (ComboSucursal) cmbsucursal.getSelectedItem();
         int idSucursal = sucursalSeleccionado.getIdSucursal();
@@ -554,21 +542,27 @@ public class Empleados extends javax.swing.JFrame {
         ComboPuesto puestoSeleccionado = (ComboPuesto) cmbpuesto.getSelectedItem();
         int idPuesto = puestoSeleccionado.getIdPuesto();
         
-        MU.mantenimientosempleados(codigo,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),Double.parseDouble(txtSalario.getText()),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"actualizar");
+        ME.mantenimientosempleados(codigo,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"actualizar");
         JOptionPane.showMessageDialog(null, "El registro ha sido actualizado!");
-        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+        ME.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", "1", 0, 0, "mostrar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
         ComboSucursal sucursalSeleccionado = (ComboSucursal) cmbsucursal.getSelectedItem();
         int idSucursal = sucursalSeleccionado.getIdSucursal();
+        String nombreSucursal = sucursalSeleccionado.getnombreSucursal();
         
         ComboPuesto puestoSeleccionado = (ComboPuesto) cmbpuesto.getSelectedItem();
         int idPuesto = puestoSeleccionado.getIdPuesto();
+        String nombrePuesto = puestoSeleccionado.getnombrePuesto();
         
-        MU.mantenimientosempleados(0,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),Double.parseDouble(txtSalario.getText()),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"agregar");
+        
+        ME.mantenimientosempleados(0,txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),cmbjornada.getSelectedItem().toString(),idSucursal, idPuesto,"agregar");
         JOptionPane.showMessageDialog(null, "El registro ha sido guardado!");
-        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+        clsEmpleado objE = new clsEmpleado(txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDireccion.getText(),cmbjornada.getSelectedItem().toString(),nombreSucursal, nombrePuesto);
+        objE.mostrarInformacion();
+        ME.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", "1", 0, 0, "mostrar");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
@@ -586,20 +580,20 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         MU.mantenimientosempleados(codigo, "1", "1", "1", "1", 0, "1", 0, 0, "eliminar");
+         ME.mantenimientosempleados(codigo, "1", "1", "1", "1", "1", 0, 0, "eliminar");
         JOptionPane.showMessageDialog(null, "El registro ha sido guardado!");
-        MU.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", 0, "1", 0, 0, "mostrar");
+        ME.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", "1", 0, 0, "mostrar");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jEmpleadosMouseClicked
         
         try{
             fila = jEmpleados.getSelectedRow();
-            identidad1=jEmpleados.getValueAt(fila,0).toString();
+            identidad1=jEmpleados.getValueAt(fila,2).toString();
             ResultSet rs;
             Connection con = cone.establecerConexion();
             
-            CallableStatement cmd = con.prepareCall("{CALL mostrarempleadoespecifico(?)}");
+            CallableStatement cmd = con.prepareCall("{CALL sp_mostrarempleadoespecifico(?)}");
             cmd.setString(1, identidad1);
             rs = cmd.executeQuery();
             
@@ -609,8 +603,6 @@ public class Empleados extends javax.swing.JFrame {
                 txtApellido.setText(rs.getString("Apellido"));
                 txtCorreo.setText(rs.getString("Correo"));
                 txtDireccion.setText(rs.getString("Direccion"));
-                txtSalario.setText(rs.getString("Salario"));
-                
                 
                 cmbjornada.setSelectedItem(rs.getString("Jornada"));
                 cmbsucursal.setSelectedItem(rs.getString("nombreSucursal"));
@@ -623,10 +615,22 @@ public class Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jEmpleadosMouseClicked
 
     private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
-        Planillas FP = new Planillas();
+        Planillas FP = new Planillas(IDEmp,rol);
         FP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAgregar1ActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        if(rol.equals("GER")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("AAC")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnRegresarActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -679,10 +683,10 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbjornada;
     private javax.swing.JComboBox<String> cmbpuesto;
@@ -698,7 +702,6 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
@@ -712,7 +715,6 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextArea txtDireccion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtUsuario3;
     // End of variables declaration//GEN-END:variables
 }

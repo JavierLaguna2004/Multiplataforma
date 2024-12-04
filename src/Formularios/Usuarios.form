@@ -284,7 +284,7 @@
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnSalir" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                  <Component id="btnCerrarSesion1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnRegresar" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnCerrarSesion" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
@@ -303,7 +303,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnCerrarSesion1" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="btnRegresar" min="-2" pref="49" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnCerrarSesion" min="-2" pref="49" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -428,7 +428,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnCerrarSesion1">
+                    <Component class="javax.swing.JButton" name="btnRegresar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="8c" green="41" red="27" type="rgb"/>
@@ -446,6 +446,9 @@
                         <Property name="horizontalAlignment" type="int" value="4"/>
                         <Property name="horizontalTextPosition" type="int" value="4"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegresarActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnLimpiar">
                       <Properties>

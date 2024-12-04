@@ -24,15 +24,24 @@ public class Usuarios extends javax.swing.JFrame {
     int codigo;
     String identidad1 = "";
     
-    public Usuarios() {
+    private int IDEmp;
+    private String rol;
+    
+    
+    public Usuarios(int IDEmp, String rol) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pintarImagen(this.lblLogo,"src/Formularios/logoSiglas.jpg");
         llenarrolesproc();
         llenarempleadosproc();
         
+        this.IDEmp = IDEmp;
+        this.rol = rol;
+        
         MU.cargartablaUsuarios(jUsuarios, 0, "1", "1", 0, 0,"mostrar");
     }
+
+    private Usuarios() {}
     
     public void llenarrolesproc(){
         cmbRol.setModel(MU.llenarroles()); 
@@ -65,7 +74,7 @@ public class Usuarios extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnCerrarSesion1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         txtClave = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -196,13 +205,18 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion1.setBackground(new java.awt.Color(39, 65, 140));
-        btnCerrarSesion1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnCerrarSesion1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
-        btnCerrarSesion1.setText("REGRESAR");
-        btnCerrarSesion1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnCerrarSesion1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setBackground(new java.awt.Color(39, 65, 140));
+        btnRegresar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Log-in.png"))); // NOI18N
+        btnRegresar.setText("REGRESAR");
+        btnRegresar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setBackground(new java.awt.Color(39, 65, 140));
         btnLimpiar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -223,7 +237,7 @@ public class Usuarios extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCerrarSesion1)
+                    .addComponent(btnRegresar)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(180, 180, 180)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,7 +253,7 @@ public class Usuarios extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
@@ -507,6 +521,18 @@ public class Usuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        if(rol.equals("GER")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }else if(rol.equals("AAC")){
+            Menu frmM = new Menu(IDEmp,rol);
+            frmM.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -558,10 +584,10 @@ public class Usuarios extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbEmpleado;
     private javax.swing.JComboBox<String> cmbRol;
