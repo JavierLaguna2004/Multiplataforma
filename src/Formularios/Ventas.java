@@ -359,7 +359,7 @@ public class Ventas extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1042, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1087, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(14, 14, 14))
         );
@@ -587,6 +587,7 @@ public class Ventas extends javax.swing.JFrame {
         btnGuardarVenta.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardarVenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnGuardarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Credit-card.png"))); // NOI18N
         btnGuardarVenta.setText("GENERAR VENTA");
         btnGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -597,6 +598,7 @@ public class Ventas extends javax.swing.JFrame {
         btnFactura.setBackground(new java.awt.Color(39, 65, 140));
         btnFactura.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnFactura.setForeground(new java.awt.Color(255, 255, 255));
+        btnFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Monitor.png"))); // NOI18N
         btnFactura.setText("IMPRIMIR FACTURA");
         btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -607,6 +609,7 @@ public class Ventas extends javax.swing.JFrame {
         btnLimpieza.setBackground(new java.awt.Color(39, 65, 140));
         btnLimpieza.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLimpieza.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpieza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Checklist.png"))); // NOI18N
         btnLimpieza.setText("NUEVA VENTA");
         btnLimpieza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -617,6 +620,7 @@ public class Ventas extends javax.swing.JFrame {
         btnCancelarVenta.setBackground(new java.awt.Color(39, 65, 140));
         btnCancelarVenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnCancelarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Dash-circle.png"))); // NOI18N
         btnCancelarVenta.setText("CANCELAR VENTA");
         btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -627,6 +631,7 @@ public class Ventas extends javax.swing.JFrame {
         btnEliminarProducto.setBackground(new java.awt.Color(39, 65, 140));
         btnEliminarProducto.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Backspace.png"))); // NOI18N
         btnEliminarProducto.setText("ELIMINAR PRODUCTO");
         btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -637,6 +642,7 @@ public class Ventas extends javax.swing.JFrame {
         btnAgregarProducto.setBackground(new java.awt.Color(39, 65, 140));
         btnAgregarProducto.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnAgregarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add-square.png"))); // NOI18N
         btnAgregarProducto.setText("AÑADIR PRODUCTO");
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -655,21 +661,22 @@ public class Ventas extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpieza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuardarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jLabel14)))
-                .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(btnGuardarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(btnCancelarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                    .addComponent(btnEliminarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -685,9 +692,9 @@ public class Ventas extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                            .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnLimpieza, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -795,7 +802,7 @@ public class Ventas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1465, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
