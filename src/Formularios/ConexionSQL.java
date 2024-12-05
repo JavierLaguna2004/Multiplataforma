@@ -27,7 +27,6 @@ public class ConexionSQL {
     public Connection establecerConexion() {
         try {
             conectar = DriverManager.getConnection(cadena, usuario, contrasena);
-            JOptionPane.showMessageDialog(null, "Se conectó a la base de datos");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + e.toString());
         }
