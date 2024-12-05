@@ -54,6 +54,13 @@ public class Planillas extends javax.swing.JFrame {
        txtSalario.setText(Double.toString(total));
    }
    
+   public void limpiar(){
+       cmbEmpleado.setSelectedIndex(0);
+       txtFecha.setText("");
+       txtHoras.setText("");
+       txtSueldoHora.setText("");
+       txtSalario.setText("");
+   }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -66,14 +73,10 @@ public class Planillas extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPlanillas = new javax.swing.JTable();
-        txtBuscar = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        cmbBuscar = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cmbEmpleado = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -134,18 +137,6 @@ public class Planillas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jPlanillas);
 
-        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        txtBuscar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtBuscar.setForeground(new java.awt.Color(39, 65, 140));
-
-        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(39, 65, 140));
-        jLabel7.setText("Buscar Por:");
-
-        cmbBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        cmbBuscar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        cmbBuscar.setForeground(new java.awt.Color(39, 65, 140));
-
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(39, 65, 140));
         jLabel8.setText("SALARIO:");
@@ -153,7 +144,6 @@ public class Planillas extends javax.swing.JFrame {
         txtSalario.setBackground(new java.awt.Color(255, 255, 255));
         txtSalario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSalario.setForeground(new java.awt.Color(39, 65, 140));
-        txtSalario.setEnabled(false);
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
@@ -163,11 +153,6 @@ public class Planillas extends javax.swing.JFrame {
         cmbEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbEmpleado.setForeground(new java.awt.Color(39, 65, 140));
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(39, 65, 140));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Search.png"))); // NOI18N
-        jLabel2.setText("BUSCAR:");
-
         jPanel8.setBackground(new java.awt.Color(237, 235, 236));
 
         btnAgregar.setBackground(new java.awt.Color(39, 65, 140));
@@ -175,6 +160,11 @@ public class Planillas extends javax.swing.JFrame {
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Delete.png"))); // NOI18N
         btnAgregar.setText("LIMPIAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -316,36 +306,21 @@ public class Planillas extends javax.swing.JFrame {
                                     .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(31, 31, 31)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(47, 47, 47)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -466,6 +441,10 @@ public class Planillas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -507,14 +486,11 @@ public class Planillas extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> cmbBuscar;
     private javax.swing.JComboBox<String> cmbEmpleado;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -524,7 +500,6 @@ public class Planillas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTable jPlanillas;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHoras;
     private javax.swing.JTextField txtSalario;

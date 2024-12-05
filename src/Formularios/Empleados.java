@@ -48,6 +48,16 @@ public class Empleados extends javax.swing.JFrame {
         ME.cargartablaEmpleados(jEmpleados, 0, "1", "1", "1", "1", "1", 0, 0, "mostrar");
     }
     
+    public void limpiar(){
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        cmbjornada.setSelectedIndex(0);
+        cmbsucursal.setSelectedIndex(0);
+        cmbpuesto.setSelectedIndex(0);
+    }
+    
     private Empleados(){}
     
     public void llenarjornadasproc(){
@@ -94,16 +104,12 @@ public class Empleados extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDireccion = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        txtUsuario3 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         cmbjornada = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         cmbsucursal = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         cmbpuesto = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
@@ -199,17 +205,6 @@ public class Empleados extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(39, 65, 140));
         jLabel1.setText("DIRECCION:");
 
-        txtUsuario3.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        txtUsuario3.setForeground(new java.awt.Color(39, 65, 140));
-
-        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(39, 65, 140));
-        jLabel7.setText("Buscar Por:");
-
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(39, 65, 140));
-
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(39, 65, 140));
         jLabel9.setText("JORNADA:");
@@ -234,11 +229,6 @@ public class Empleados extends javax.swing.JFrame {
         cmbpuesto.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cmbpuesto.setForeground(new java.awt.Color(39, 65, 140));
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(39, 65, 140));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Search.png"))); // NOI18N
-        jLabel2.setText("BUSCAR:");
-
         jPanel8.setBackground(new java.awt.Color(237, 235, 236));
 
         btnModificar.setBackground(new java.awt.Color(39, 65, 140));
@@ -257,6 +247,11 @@ public class Empleados extends javax.swing.JFrame {
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Delete.png"))); // NOI18N
         btnAgregar.setText("LIMPIAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(39, 65, 140));
         btnGuardar.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -424,16 +419,7 @@ public class Empleados extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(cmbsucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 925, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtUsuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 925, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -444,13 +430,7 @@ public class Empleados extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtUsuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(34, 34, 34)
                         .addComponent(jScrollPane1))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
@@ -631,6 +611,10 @@ public class Empleados extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -691,17 +675,14 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbjornada;
     private javax.swing.JComboBox<String> cmbpuesto;
     private javax.swing.JComboBox<String> cmbsucursal;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTable jEmpleados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
@@ -715,6 +696,5 @@ public class Empleados extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextArea txtDireccion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtUsuario3;
     // End of variables declaration//GEN-END:variables
 }
